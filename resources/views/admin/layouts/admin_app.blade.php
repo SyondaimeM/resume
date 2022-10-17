@@ -189,7 +189,7 @@
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
                     <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">© {{ date("Y") }}  Developed By <a
-                            href="https://www.linkedin.com/in/omar-kadish" target="_blank"><i class="mdi mdi-linkedin"></i> Omar KADISH</a>.</span>
+                            href="https://www.linkedin.com/in/Sanish-Maharjan" target="_blank"><i class="mdi mdi-linkedin"></i> Sanish Maharjan</a>.</span>
                 </div>
             </footer>
             <!-- partial -->

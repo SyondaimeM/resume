@@ -26,9 +26,9 @@ class UserFactory extends Factory
             'address' => $this->faker->address(),
             'phone_number' => $this->faker->phoneNumber(),
             'summery' => $this->faker->text('200'),
-            'linkedin' => 'https://www.linkedin.com/in/omar-kadish',
-            'github' => 'https://github.com/OmarKadish',
-            'instagram' => 'https://www.instagram.com/omarabdalazeez6/',
+            'linkedin' => 'https://www.linkedin.com/in/Sanish-Maharjan',
+            'github' => 'https://github.com/SanishMaharjan',
+            'instagram' => 'https://www.instagram.com/Sanishabdalazeez6/',
             'email_verified_at' => now(),
             'password' => Hash::make('12345678'), // password
             'remember_token' => Str::random(10),
