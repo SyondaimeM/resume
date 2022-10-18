@@ -61,7 +61,7 @@
                     </div>
                     <div class="resume-date text-md-right">
                         <span
-                            class="text-primary">{{date('M Y', strtotime($exp->section->startDate))}} - {{($exp->section->isActive)? 'Present': date('M Y', strtotime($exp->section->endDate))}}</span>
+                            class="text-primary">{{date('Y', strtotime($exp->section->startDate))}} - {{($exp->section->isActive)? 'Present': date('Y', strtotime($exp->section->endDate))}}</span>
                     </div>
                 </div>
             @endforeach
@@ -77,11 +77,11 @@
                     <div class="resume-content mr-auto">
                         <h3 class="mb-0">{{$edu->collageName}}</h3>
                         <div class="subheading mb-3">{{$edu->degree}}<b> in </b>{{$edu->department}}</div>
-                        <p>GPA: {{$edu->gpa}}</p>
+                        <p>Percentage: {{$edu->gpa}}%</p>
                         <div>{!!$edu->section->details!!}</div>
                     </div>
                     <div class="resume-date text-md-right">
-                        <span class="text-primary">{{date('M Y', strtotime($edu->section->startDate))}} - {{($edu->section->isActive)? 'Present': date('M Y', strtotime($edu->section->endDate))}}</span>
+                        <span class="text-primary">{{date('Y', strtotime($edu->section->startDate))}} - {{($edu->section->isActive)? 'Present': date('Y', strtotime($edu->section->endDate))}}</span>
                     </div>
                 </div>
             @endforeach

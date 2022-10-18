@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Collage Name</label>
+                                <label class="col-sm-3 col-form-label">College Name</label>
                                 <div class="col-sm-9">
                                     <input type="text" name="collageName"
                                            value="{{isset($education)? $education->collageName : old('collageName')}}"
