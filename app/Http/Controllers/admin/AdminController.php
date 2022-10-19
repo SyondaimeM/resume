@@ -104,7 +104,7 @@ class AdminController extends Controller
             'linkedin' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'instagram' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'github' => 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
-            'photo' => 'mimes:jpeg,bmp,png,jpg|max:2048',
+            'photo' => 'mimes:jpeg,bmp,png,jpg|max:10240',
         ]);
         try {
             DB::transaction(function () use ($request, $user) {
