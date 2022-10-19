@@ -1,4 +1,4 @@
-@extends('layouts.main_app')
+@extends('layouts.new_main_app')
 
 @section('content')
     <section class="resume-section p-3 p-lg-5 d-flex d-column" id="about">
@@ -12,19 +12,11 @@
             </div>
             <div class="mb-4" style="line-height: 20px;">{!! $user->summery !!}</div>
             <ul class="list-inline list-social-icons mb-0">
-                {{--                <li class="list-inline-item">
-                                    <a target="_blank" href="#">
-                                        <span class="fa-stack fa-lg">
-                                          <i class="fa fa-circle fa-stack-2x"></i>
-                                          <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-                                        </span>
-                                    </a>
-                                </li>--}}
                 <li class="list-inline-item">
                     <a target="_blank" href="{{$user->instagram}}">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                          <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
                         </span>
                     </a>
                 </li>
@@ -32,7 +24,7 @@
                     <a target="_blank" href="{{$user->linkedin}}">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                          <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
                         </span>
                     </a>
                 </li>
@@ -40,7 +32,7 @@
                     <a target="_blank" href="{{$user->github}}">
                         <span class="fa-stack fa-lg">
                           <i class="fa fa-circle fa-stack-2x"></i>
-                          <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                          <i class="fab fa-github fa-stack-1x fa-inverse"></i>
                         </span>
                     </a>
                 </li>
@@ -48,8 +40,8 @@
         </div>
     </section>
 
-    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="experience">
-        <div class="my-auto">
+    <section class="resume-section" id="experience">
+        <div class="resume-section-content">
             <h2 class="mb-5">Experience</h2>
 
             @foreach($experiences as $exp)
@@ -68,9 +60,13 @@
 
         </div>
     </section>
-
-    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">
-        <div class="my-auto">
+    
+    <hr class="m-0" />
+    
+    <!-- Education-->
+    
+    <section class="resume-section" id="education">
+        <div class="resume-section-content">
             <h2 class="mb-5">Education</h2>
             @foreach($education as $edu)
                 <div class="resume-item d-flex flex-column flex-md-row mb-5">
@@ -88,8 +84,12 @@
         </div>
     </section>
 
-    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
-        <div class="my-auto">
+    <hr class="m-0" />
+
+    <!-- Skills-->
+
+    <section class="resume-section" id="skills">
+        <div class="resume-section-content">
             <h2 class="mb-5">Skills</h2>
             <div class="subheading mb-3">Programming Languages, Frameworks &amp; Tools</div>
             <ul class="fa-ul mb-0">
@@ -102,9 +102,13 @@
             </ul>
         </div>
     </section>
-
-    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="interests">
-        <div class="my-auto">
+    
+    <hr class="m-0" />
+    
+    <!-- Interests-->
+    
+    <section class="resume-section" id="interests">
+        <div class="resume-section-content">
             <h2 class="mb-5">Interests</h2>
             <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid
                 skiier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free
@@ -115,8 +119,12 @@
         </div>
     </section>
 
-    <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="awards">
-        <div class="my-auto">
+    <hr class="m-0" />
+
+    <!-- Awards-->
+    
+    <section class="resume-section" id="awards">
+        <div class="resume-section-content">
             <h2 class="mb-5">Awards &amp; Certifications</h2>
             <ul class="fa-ul mb-0">
                 <li>
@@ -158,22 +166,3 @@
     </section>
 
 @endsection
-{{--<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>--}}
