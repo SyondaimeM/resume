@@ -25,6 +25,7 @@ Route::prefix('')->group(function () {
     Route::get('/projects', [HomeController::class, 'projects'])->name('projects');
     Route::get('/education', [HomeController::class, 'education'])->name('education');
     Route::get('/skills', [HomeController::class, 'skills'])->name('skills');
+    Route::post('/message', [HomeController::class, 'message'])->name('message');
 });
 
 Auth::routes(['register' => false]);
