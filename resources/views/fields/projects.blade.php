@@ -5,7 +5,7 @@
     <title>Sanish Maharjan | Projects</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- SEO -->
     <meta name="keywords" content="free portfolio template,portfolio template, portfolio website template, open source and contribution to open source" />
     <meta name="description" content="This project serves as a free and beautiful portfolio template for everyone who needs the perfect portfolio. Anyone can showcase their work including moocs, education, projects, experience,etc. to the world." />

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="Sanish Maharjan| Home" />
     <meta name="apple-mobile-web-app-title" content="Sanish Maharjan| Home" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="summary" content="An open source project aimed at providing free and beautiful templates to everyone for building their portfolio websites and showcase their work to the world." />
     <!--For Dark/Light mode Toggle-->
     <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
