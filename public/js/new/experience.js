@@ -6,24 +6,24 @@ const experiencecards = document.querySelector(".experience-cards");
 const exp = [
   {
     title: "Software Engineer",
-    cardImage: "images/exp/tech.png",
+    cardImage: "images/exp/nullpointers.png",
     place: "Null Pointers",
     time: "(Feb, 2019 - Sept, 2022)",
-    desp: "<li>Worked to migrate Flipkart lite’s product page to AMP pages so that they load up instantly.</li> <li>Made changes in the current progressive web app of Flipkart to react to different actions performed on AMP page.</li> <li>Created a node module called “fk-amp” which abstracts all the files and middlewares and can be easily imported and used from express server.</li>",
+    desp: "<li>Designed and developed system database using MySQL.</li> <li>Solve complex performance problems and architectural challenges</li><li>Writing back-end code and building efficient, testable, and reusable PHP modules.</li>",
   },
   {
     title: "Software Engineer",
-    cardImage: "images/exp/nullpointers.png",
+    cardImage: "images/exp/tech.png",
     place: "Tech Community Nepal | Stylus",
     time: "(Apr, 2021 - Sept, 2022)",
-    desp: "<li>Worked with MOZILLA as a part of Google Summer Of Code.</li><li>Worked on Extension Activity Monitor which is a privileged extension for Firefox that uses the activityLog API (privileged API) to monitor the activities of the other installed extensions.</li><li>The activityLog API listens for logs from other installed extensions.</li>",
+    desp: "<li>Participated actively in Agile Scrum planning meetings and converted tasks into simple stories.</li><li>Designed system architecture through all phases of software development life cycle.</li><li>Performed Unit testing, debugging, troubleshooting, and upgrading of existing software.</li>",
   },
   {
     title: "Computer Teacher",
     cardImage: "images/exp/usna.jpg",
     place: "Ujjwal Shishu Niketan Academy",
     time: "(Mar, 2018 - Feb, 2021)",
-    desp: "<li>Worked on the project “LTI (Learning Tools Interoperability) 2.0 standards Implementation for ekShiksha.</li><li>Designed a software that would help faculty to create a quiz using the questions from the database based on his/her choice of topics and he should be provided with various facilities and options to create a quiz of his choice.</li>",
+    desp: "<li>Taught about Computer and Computer Programming</li><li>Helped to tackle with problems by making large problem to simple tasks.</li> <li>Monitored students to create short and reusable codes.",
   },
 ];
 
