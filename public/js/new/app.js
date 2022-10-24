@@ -108,7 +108,6 @@ let header = $(`
 </nav>`);
 
 // Footer
-
 let footer = $(`
 <footer class="footer sticky-bottom"  style="background-color:#2b2a2a;">
   <div class="p-4">
@@ -137,11 +136,10 @@ let footer = $(`
              <div class="form-header">
                 <h6 class="display">Get in Touch</h6>
               </div>
-                <form name="form1" action="" method="POST" accept-charset="UTF-8" >
-                  <input id="name" type="text" name="name" placeholder="Your Name" required/>
-                  <input id="email" type="email" name="email" placeholder="Email Address" required/>                  
-                  <textarea id="textArea" name="message" placeholder="Type your Message" required></textarea>
-              
+                <form id="idForm" name="form1"action="/message" method="POST" accept-charset="UTF-8" >
+                  <input id="name" type="text" name="name" placeholder="Your Name"/>
+                  <input id="email" type="email" name="email" placeholder="Email Address"/>                  
+                  <textarea id="textArea" name="message" placeholder="Type your Message"></textarea>
                   <div id="main">
                     <button id="lnch" type="button" value="Send" >Send</button>
                     <div id="lnch_btn"><i class="fas fa-space-shuttle"></i></div>
@@ -209,6 +207,7 @@ let upArrow = $(`
 `);
 
 $(document).ready(function () {
+ 
   // updating the color of the swiper bullets (initial update of color)
   updateColorOfSwiperBullets(localStorage.getItem("lightMode"));
 
@@ -415,7 +414,27 @@ $(function submitAnimation() {
       }, 1500);
       // Wait for 2.2 seconds so that the send button animation can be fully played before submitting the form
       setTimeout(() => {
-        document.querySelector('form').submit();
+        //form submission
+        $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        var csrf = document.querySelector('meta[name="csrf-token"]').content;
+        var data = $('#idForm').serialize();
+        var actionUrl = '/message';
+        console.log(actionUrl);
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            data: data, // serializes the form's elements.
+            success: function(data)
+            {
+              $('#idForm')[0].reset();
+              window.location.href = "/";
+            }
+        });
+      
       }, 2200);
     }
   });

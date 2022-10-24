@@ -12,6 +12,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="Googlebot" content="index,follow" />
     <meta name="AdsBot-Google" content="index,follow" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <meta property="og:site_name" content="https://portfolio.smaranjitghose.codes/education.html">
     <meta property="og:title" content="Sanish Maharjan | Education">

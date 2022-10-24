@@ -6,8 +6,10 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Section;
 use App\Models\User;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -46,5 +48,28 @@ class HomeController extends Controller
     public function skills()
     {
         return view('fields.skills');
+    }
+
+    public function message(Request $request)
+    {   
+        // dd($data);
+        try {
+            // Safely perform set of DB related queries if fail rollback all.
+            DB::transaction(function () use ($request){
+                $data = $request->all();
+                $message = new Message();
+                $message->name = $data['name'];
+                $message->email = $data['email'];
+                $message->description = $data['message'];
+                $message->status = 1;
+                $message->save();
+            });
+        } catch (\Exception $exception){
+            // Back to form with errors
+            return response()->json(['status'=>'401','msg'=>$exception->getMessage()]);
+        }
+        return response()->json(['status'=>'500','msg'=>'success']);
+        // return redirect('/')-> with('success', 'Sent');
+
     }
 }
