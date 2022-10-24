@@ -61,7 +61,7 @@
                 </div>
                 <br/>
                 <span style="display: inline;">I am into <span class="animated-text"
-                    data-words="Designing, UI/UX, Coding, Web Development, Mentoring"></span>
+                    data-words="Software Engineer, Full Stack Developer, UI/UX, Coding, Web Development, Mentoring"></span>
                 </span>
                 <div>
                     <div class="social-icons">

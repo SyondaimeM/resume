@@ -5,54 +5,64 @@ AOS.init();
 const techStackCards = document.querySelector(".techstack-box");
 const techStack = [
   {
-    langImage: "assets/images/techstack-page/html.png",
+    langImage: "/images/techstack-page/html.png",
     langName: "HyperText Markup Language",
     langDesc: "<li>The HyperText Markup Language, or HTML is the standard markup language for documents designed to be displayed in a web browser</li>",
   },
   {
-    langImage: "assets/images/techstack-page/css.png",
+    langImage: "/images/techstack-page/css.png",
     langName: "Cascading Style Sheets",
     langDesc: "<li>Cascading Style Sheets is a style sheet language used for describing the presentation of a document written in a markup language such as HTML</li>",
   },
   {
-    langImage: "assets/images/techstack-page/javascript.png",
+    langImage: "/images/techstack-page/javascript.png",
     langName: "JavaScript",
     langDesc: "<li>JavaScript, often abbreviated JS, is a programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS</li>",
   },
   {
-    langImage: "assets/images/techstack-page/node.png",
-    langName: "Node",
-    langDesc: "<li>Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser</li>",
+    langImage: "/images/techstack-page/php.png",
+    langName: "PHP",
+    langDesc: "<li>PHP is a type of open-source general-purpose scripting language fit for server-side programming. It is a popular choice in web development in creating dynamic pages and applications. </li>",
   },
   {
-    langImage: "assets/images/techstack-page/python.png",
-    langName: "Python",
-    langDesc: "<li>Python is an interpreted high-level general-purpose programming language</li>",
+    langImage: "/images/techstack-page/ci.png",
+    langName: "CodeIgniter",
+    langDesc: "<li>CodeIgniter is an Application Framework. Its goal is to enable you to develop projects much faster than you could if you were writing code from scratch</li>",
   },
   {
-    langImage: "assets/images/techstack-page/cpp.png",
-    langName: "C++",
-    langDesc: "<li>C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or C with Classes</li>",
+    langImage: "/images/techstack-page/laravel.png",
+    langName: "Laravel",
+    langDesc: "<li>Laravel is an open-source PHP framework, which is robust and easy to understand. It follows a model-view-controller design pattern. Laravel reuses the existing components of different frameworks which helps in creating a web application. </li>",
   },
   {
-    langImage: "assets/images/techstack-page/git.png",
+    langImage: "/images/techstack-page/vuejs.png",
+    langName: "VueJS",
+    langDesc: "<li>VueJS is an open source progressive JavaScript framework used to develop interactive web interfaces. It is one of the famous frameworks used to simplify web development. VueJS focusses on the view layer.</li>",
+  },
+  {
+    langImage: "/images/techstack-page/mysql.png",
+    langName: "MySQL",
+    langDesc: "<li>MySQL is an open-source relational database management system. As with other relational databases, MySQL stores data in tables made up of rows and columns. Users can define, manipulate, control, and query data using Structured Query Language, more commonly known as SQL.</li>",
+  },
+  {
+    langImage: "/images/techstack-page/git.png",
     langName: "Git",
     langDesc: "<li>Git is software for tracking changes in any set of files, usually used for coordinating work among programmers collaboratively developing source code during software development.</li>",
   },
   {
-    langImage: "assets/images/techstack-page/bootstrap.png",
+    langImage: "/images/techstack-page/bootstrap.png",
     langName: "Bootstrap",
     langDesc: "<li>Bootstrap is a free and open-source CSS framework directed at responsive, mobile-first front-end web development</li>",
   },
   {
-    langImage: "assets/images/techstack-page/react.png",
-    langName: "React",
-    langDesc: "<li>React is a free and open-source front-end JavaScript library for building user interfaces based on UI components</li>",
-  },
-  {
-    langImage:"assets/images/techstack-page/c.png",
+    langImage:"/images/techstack-page/c.png",
     langName:"C",
     langDesc:"<li>C is a general-purpose, procedural computer programming language supporting structured programming, lexical variable scope, and recursion, with a static type system</li>"
+  },
+  {
+    langImage: "/images/techstack-page/cpp.png",
+    langName: "C++",
+    langDesc: "<li>C++ is a general-purpose programming language created by Bjarne Stroustrup as an extension of the C programming language, or C with Classes</li>",
   },
 ];
 

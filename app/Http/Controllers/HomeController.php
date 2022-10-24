@@ -42,4 +42,9 @@ class HomeController extends Controller
     {
         return view('fields.projects');
     }
+
+    public function skills()
+    {
+        return view('fields.skills');
+    }
 }
