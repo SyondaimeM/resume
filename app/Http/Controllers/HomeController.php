@@ -25,6 +25,21 @@ class HomeController extends Controller
         $education = Education::with('section')->whereHas('section', function ($e) use ($user) {
             return $e->where([['user_id',  $user->id],['isShown', 1]]);
         })->orderByDesc('created_at')->get();
-        return view('home', compact('user', 'experiences', 'education'));
+        return view('fields.home', compact('user', 'experiences', 'education'));
+    }
+
+    public function experience()
+    {
+        return view('fields.experience');
+    }
+
+    public function education()
+    {
+        return view('fields.education');
+    }
+
+    public function projects()
+    {
+        return view('fields.projects');
     }
 }

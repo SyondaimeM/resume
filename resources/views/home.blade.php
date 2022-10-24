@@ -40,6 +40,37 @@
         </div>
     </section>
 
+    <!-- <hr class="m-0"> -->
+    
+    <!-- Experience -->
+    
+    <!-- <section class="resume-section" id="skills">
+        <div class="resume-section-content">
+            <h2 class="mb-5">Skills and Tools</h2>
+            <div class="resume-item d-flex flex-column flex-md-row mb-5">
+                <div class="resume-content mr-auto">
+                    <h4 class="mb-0">Knowledge</h4>
+                    <p>
+                        <ul>
+                            <li>Software Development Life Cycle</li>
+                            <li>PHP Programing</li>
+                            <li>Database Design</li>
+                            <li>Algorithms and Data Structures / Collections</li>
+                            <li>Web Services</li>
+                            <li>Enterprise Architecture</li>
+                            <li>Design Patterns </li>
+                            <li>Requirement Analysis</li>
+                            <li>Backend Development</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <hr class="m-0">
+    
+    <!-- Experience -->
+    
     <section class="resume-section" id="experience">
         <div class="resume-section-content">
             <h2 class="mb-5">Experience</h2>
@@ -62,7 +93,53 @@
     </section>
     
     <hr class="m-0" />
+   
+    <!-- Skills-->
+
+    <section class="resume-section" id="skills">
+        <div class="resume-section-content">
+            <h2 class="mb-5">Skills</h2>
+            <div class="subheading mb-3">Programming Languages, Frameworks &amp; Tools</div>
+            <p>
+                <ul>
+                    <li>Software Development Life Cycle</li>
+                    <li>PHP Programing</li>
+                    <li>Database Design</li>
+                    <li>Algorithms and Data Structures / Collections</li>
+                    <li>Web Services</li>
+                    <li>Enterprise Architecture</li>
+                    <li>Design Patterns </li>
+                    <li>Requirement Analysis</li>
+                    <li>Backend Development</li>
+                </ul>
+            </p>
+            <p>
+                <b>Languages:</b>  PHP <br>
+                <b>Web:</b> HTML5, CSS, JavaScript, AJAX, VueJS, jQuery <br>
+                <b>Web and Application Servers:</b> Apache HTTP Server, Amazon EC2, Amazon S3 <br>
+                <b>Frameworks:</b> MVC Architecture Laravel, Codeigniter <br>
+                <b>Databases:</b> MySQL, Oracle, SQL Server <br>
+                <b>Design Patterns:</b> Builder pattern, Provider pattern, Facade pattern <br>
+                <b>SDLC:</b> Agile / SCRUM, Waterfall, Iterative <br>
+                <b>Cloud:</b> AWS, Cpanel Hosting <br>
+                <b>Tools:</b> Visual Studio Code, Apache Server, Xampp Control Panel, Git, Slack, Postman, MySQL Workbench, Toad, Composer, Eloquent, Vue Dev tools, <br>
+                <b>CI/CD:</b> Git, Docker <br>
+                <b>Platforms:</b> Windows, Linux <br>
+            </p>
+            
+            <!-- <ul class="fa-ul mb-0">
+                @foreach($user->activeSkills as $skill)
+                    <li>
+                        <i class="fa-li fa fa-check"></i>
+                        {{$skill->name}}
+                    </li>
+                @endforeach
+            </ul> -->
+        </div>
+    </section>
     
+    <hr class="m-0" />
+     
     <!-- Education-->
     
     <section class="resume-section" id="education">
@@ -73,7 +150,7 @@
                     <div class="resume-content mr-auto">
                         <h3 class="mb-0">{{$edu->collageName}}</h3>
                         <div class="subheading mb-3">{{$edu->degree}}<b> in </b>{{$edu->department}}</div>
-                        <p>Percentage: {{$edu->gpa}}%</p>
+                        <!-- <p>Percentage: {{$edu->gpa}}%</p> -->
                         <div>{!!$edu->section->details!!}</div>
                     </div>
                     <div class="resume-date text-md-right">
@@ -86,25 +163,6 @@
 
     <hr class="m-0" />
 
-    <!-- Skills-->
-
-    <section class="resume-section" id="skills">
-        <div class="resume-section-content">
-            <h2 class="mb-5">Skills</h2>
-            <div class="subheading mb-3">Programming Languages, Frameworks &amp; Tools</div>
-            <ul class="fa-ul mb-0">
-                @foreach($user->activeSkills as $skill)
-                    <li>
-                        <i class="fa-li fa fa-check"></i>
-                        {{$skill->name}}
-                    </li>
-                @endforeach
-            </ul>
-        </div>
-    </section>
-    
-    <hr class="m-0" />
-    
     <!-- Interests-->
     
     <section class="resume-section" id="interests">

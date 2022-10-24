@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/experience', [HomeController::class, 'experience'])->name('experience');
+    Route::get('/projects', [HomeController::class, 'projects'])->name('projects');
+    Route::get('/education', [HomeController::class, 'education'])->name('education');
 });
 
 Auth::routes(['register' => false]);
