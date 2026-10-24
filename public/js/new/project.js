@@ -6,34 +6,65 @@ const projectcards = document.querySelector(".projectcards");
 // Array of object for projects
 const projects = [
   {
-    title: "Sryngar",
-    cardImage: "images/project/sryngar.jpg",
-    description: "A quiz app built using basic react.",
-    tagimg: "https://cdn.iconscout.com/icon/free/png-512/react-1-282599.png",
-    Previewlink: "https://sryngar.vpnnp.com/",
-    Githublink: "",
-  },
-  {
-    title: "PUBG",
-    cardImage: "images/project/pubg.jpg",
-    description: "Youtube Channel Red Esports (https://www.youtube.com/channel/UCuUJvbl-2U4CPC25GnS6oPA) uses this software to create dynamic stats in their channel using OBS with our software.",
-    tagimg: "https://image.flaticon.com/icons/png/512/643/643350.png",
+    title: "RBC QuickPay",
+    cardImage: "images/project/project-card.svg",
+    description:
+      "A real-time money transfer system built on RBC Domain, designed for secure and reliable high-volume transactions. Processed more than $50 million in its first four months.",
+    technologies: "PHP, Node.js, RBC Domain, Kubernetes, Azure, MySQL, REST APIs",
     Previewlink: "",
     Githublink: "",
   },
   {
-    title: "Bakes and Cakes",
+    title: "National Direct Deposit Service",
+    cardImage: "images/project/project-card.svg",
+    description:
+      "A high-volume direct-deposit import service that processes over 13,000 records daily, with a focus on throughput, error handling, and data integrity.",
+    technologies: "PHP, Redis, RBC Domain, Kubernetes, Azure, MySQL, REST APIs",
+    Previewlink: "",
+    Githublink: "",
+  },
+  {
+    title: "Kalipso",
+    cardImage: "images/project/project-card.svg",
+    description:
+      "An ad-tracking and lead-generation platform that normalizes events from multiple ad networks and provides live campaign reporting and notifications.",
+    technologies: "PHP, Laravel, Node.js, Vue.js, Redis, WebSockets, Docker, Kubernetes",
+    Previewlink: "",
+    Githublink: "",
+  },
+  {
+    title: "PUBG Tournament Statistic Maker",
+    cardImage: "images/project/pubg.jpg",
+    description:
+      "A live tournament statistics system with player and team simulations, synchronized updates, and animated slides for livestreams.",
+    technologies: "Laravel, Pusher, C/C++, MySQL, REST APIs",
+    Previewlink: "",
+    Githublink: "",
+  },
+  {
+    title: "Sryngar Ecommerce",
+    cardImage: "images/project/sryngar.jpg",
+    description:
+      "A B2C cosmetics store with integrated payment gateways and a responsive shopping experience.",
+    technologies: "Laravel, MySQL, TypeScript, Tailwind, REST APIs",
+    Previewlink: "https://sryngar.vpnnp.com/",
+    Githublink: "",
+  },
+  {
+    title: "Bakes and Cake",
     cardImage: "images/project/bakesandcakes.jpg",
-    description: "Flappy bird game built using React.js",
-    tagimg: "https://cdn.iconscout.com/icon/free/png-512/react-1-282599.png",
+    description:
+      "An online dairy-products store with product customization, inventory and sales management, and analytics.",
+    technologies: "Laravel, MySQL, REST APIs",
     Previewlink: "https://bakesncakesnepal.com/",
     Githublink: "",
   },
   {
-    title: "Jojolapa",
+    title: "Jojolapa Garden Restaurant",
     cardImage: "images/project/jojolapa.png",
-    description: "Exercise tracker built using basic redux.",
-    tagimg: "https://miro.medium.com/max/2800/0*U2DmhXYumRyXH6X1.png",
+    description:
+      "A restaurant menu management platform with real-time item and pricing updates and a customer-facing gallery.",
+    technologies: "Laravel, MySQL",
     Previewlink: "https://www.jojo-lapa.com/",
     Githublink: "",
   },
@@ -113,26 +144,31 @@ const projects = [
 
 // function for rendering project cards data
 const showCards = () => {
+  if (!projectcards) {
+    return;
+  }
+
   let output = "";
-  projects.forEach(({ title, cardImage, Previewlink, Githublink }) => {
-    output += `       
-        <div class="column skill-card card" style="margin: 15px"data-aos="zoom-in-up" data-aos-easing="linear" data-aos-delay="300" data-aos-duration="600" >
-          <div class="wrapper" style="background: url(${cardImage}) center / cover no-repeat;">
-            <div class="header">
-            </div>
-            <div class="data">
-              <div class="content">
-              <div class="title-div">
-                <h1 class="title"><a href="#">${title}</a></h1>
-                </div>
-            <ul class="menu-content"><br>
-                  <li><a href="${Previewlink}" class="social-icon" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" viewBox="0 0 30 28" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-monitor"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></a></li>
-                  <li><a href="${Githublink}" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="25" viewBox="0 0 30 28" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>`;
+  projects.forEach(({ title, cardImage, description, technologies, Previewlink, Githublink }) => {
+    const projectLinks = [
+      Previewlink
+        ? `<li><a href="${Previewlink}" class="project-link" target="_blank" rel="noopener noreferrer">Live site <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></li>`
+        : "",
+      Githublink
+        ? `<li><a href="${Githublink}" class="project-link" target="_blank" rel="noopener noreferrer">Source code <i class="fab fa-github" aria-hidden="true"></i></a></li>`
+        : "",
+    ].join("");
+
+    output += `
+      <article class="portfolio-project" data-aos="zoom-in-up" data-aos-easing="linear" data-aos-delay="100" data-aos-duration="500">
+        <div class="project-image" role="img" aria-label="${title}" style="background-image: url('${cardImage}')"></div>
+        <div class="project-content">
+          <h2>${title}</h2>
+          <p class="project-description">${description}</p>
+          ${technologies ? `<p class="project-tools"><strong>Tools:</strong> ${technologies}</p>` : ""}
+          ${projectLinks ? `<ul class="project-actions">${projectLinks}</ul>` : ""}
+        </div>
+      </article>`;
   });
   projectcards.innerHTML = output;
 };

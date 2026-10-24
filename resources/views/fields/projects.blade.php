@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- SEO -->
-    <meta name="keywords" content="free portfolio template,portfolio template, portfolio website template, open source and contribution to open source" />
-    <meta name="description" content="This project serves as a free and beautiful portfolio template for everyone who needs the perfect portfolio. Anyone can showcase their work including moocs, education, projects, experience,etc. to the world." />
-    <meta content="Sanish Maharjan | Projects" />
+    <meta name="keywords" content="Sanish Maharjan, backend developer, PHP, Laravel, Node.js, projects" />
+    <meta name="description" content="Selected backend and full-stack projects by Sanish Maharjan, including real-time payment, data processing, advertising, and e-commerce platforms." />
+    <meta name="author" content="Sanish Maharjan" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 
@@ -277,7 +277,7 @@ add
                     <div class="dropdown col-md-6 d-flex mt-5 flex-column text-center justify-content-center animate__animated animate__zoomIn animate__delay-1s">
                         <h2 class="main-heading mb-0 projects_head">My <span class="my_projects">Projects</span></h2>
                         <p class="pre-heading font-weight-bolder" class="mb-0 mt-3 text-center animate__animated animate__zoomIn animate__delay-2s">
-                            My projects makes use of vast variety of latest technology tools. My best experience is to create Data Science projects and deploy them to web applications using cloud infrastructure.
+                            Selected work across backend engineering, real-time systems, data pipelines, advertising technology, and e-commerce.
                         </p>
                     </div>
                 </div>

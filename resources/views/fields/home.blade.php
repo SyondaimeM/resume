@@ -8,7 +8,7 @@
     <meta name="application-name" content="Sanish Maharjan| Home" />
     <meta name="apple-mobile-web-app-title" content="Sanish Maharjan| Home" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="summary" content="An open source project aimed at providing free and beautiful templates to everyone for building their portfolio websites and showcase their work to the world." />
+    <meta name="description" content="Sanish Maharjan is a senior backend developer with nearly seven years of experience building scalable PHP, Laravel, and Node.js systems." />
     <!--For Dark/Light mode Toggle-->
     <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
     <!--Import Google Icon Font-->
@@ -62,8 +62,9 @@
                 </div>
                 <br/>
                 <span style="display: inline;">I am into <span class="animated-text"
-                    data-words="Software Engineer, Full Stack Developer, UI/UX, Coding, Web Development, Mentoring"></span>
+                    data-words="Senior Backend Developer, PHP & Laravel Engineer, Node.js Developer, Distributed Systems Engineer"></span>
                 </span>
+                <p class="profile-summary">Senior Backend Developer with nearly 7 years of experience building high-concurrency applications, real-time data pipelines, and scalable backend systems.</p>
                 <div>
                     <div class="social-icons">
 

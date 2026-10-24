@@ -307,6 +307,29 @@ html[light-mode="dark"] {
 color: #ffffff !important;
 }
 
+.resume-download {
+  display: inline-block;
+  margin: 3px 12px;
+  padding: 6px 14px !important;
+  border: 1px solid #bb86fc;
+  border-radius: 20px;
+  background-color: #6a00bb;
+  color: #fff !important;
+  white-space: nowrap;
+}
+
+.resume-download:hover,
+.resume-download:focus {
+  background-color: #520096;
+  color: #fff !important;
+}
+
+.profile-summary {
+  max-width: 680px;
+  margin: 1rem auto;
+  line-height: 1.7;
+}
+
 .dark-theme .first,
 .dark-theme .second,
 .dark-theme .third {
