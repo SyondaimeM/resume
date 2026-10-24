@@ -22,7 +22,7 @@
 <div class="card"><div class="card-body">
     <h1 class="h4">{{ $id ? 'Edit' : 'Add' }} {{ $kind }}</h1>
     @if($errors->any())<div class="alert alert-danger" role="alert"><ul>@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
-    <form action="/admin/{{ $kind }}/{{ $id ? 'update/'.$id : 'store' }}" method="post">
+    <form action="/admin/{{ $kind }}/{{ $id ? 'update/'.$id : 'store' }}" method="post" enctype="multipart/form-data">
         @csrf
         @foreach($fields as $name => $label)
             <div class="form-group">
@@ -33,8 +33,23 @@
                     <input class="form-control" id="{{ $name }}" name="{{ $name }}" type="{{ in_array($name, ['startDate', 'endDate'], true) ? 'date' : (in_array($name, ['sort_order', 'group_order'], true) ? 'number' : 'text') }}"
                         value="{{ old($name, $values[$name] ?? (in_array($name, ['sort_order', 'group_order'], true) ? 0 : '')) }}">
                 @endif
+                @if($name === 'display_period')
+                    <small class="form-text text-muted">Leave blank to use the dates automatically. An unchanged custom label is cleared when dates or current status change.</small>
+                @elseif($name === 'group_description' || $name === 'group_order')
+                    <small class="form-text text-muted">Applies to every skill with this group name.</small>
+                @endif
             </div>
         @endforeach
+        @if($kind !== 'skill')
+            <div class="form-group">
+                <label for="image_upload">Upload a logo or project image</label>
+                <input type="file" class="form-control-file" id="image_upload" name="image_upload" accept="image/jpeg,image/png,image/webp">
+                <small class="form-text text-muted">JPEG, PNG, or WebP, up to 5 MB. An upload replaces the image path above. Existing image files are retained.</small>
+                @if(!empty($values['image']))
+                    <img src="{{ asset($values['image']) }}" alt="Current image" width="160" height="100" style="object-fit:contain;max-width:100%">
+                @endif
+            </div>
+        @endif
         @foreach($toggles as $name => $label)
             <div class="form-group">
                 <label for="{{ $name }}">{{ $label }}</label>

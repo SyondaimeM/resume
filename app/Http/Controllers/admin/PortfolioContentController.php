@@ -11,7 +11,9 @@ use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Throwable;
 
 class PortfolioContentController extends Controller
 {
@@ -114,8 +116,33 @@ class PortfolioContentController extends Controller
         } else {
             $rules += ['name' => 'required|string|max:255', 'body' => 'required|string|max:20000', 'link' => 'nullable|url:http,https|max:255', 'link_label' => 'nullable|string|max:255', 'context' => 'nullable|string|max:10000', 'technologies' => 'nullable|string|max:10000', 'image' => $imageRule, 'brand' => 'nullable|string|max:255', 'featured' => 'required|boolean'];
         }
+        if ($kind !== 'skill') {
+            $rules['image_upload'] = 'nullable|image|mimes:jpeg,jpg,png,webp|max:5120';
+        }
         $data = $request->validate($rules);
         $item = $id ? $this->query($kind, $request->user()->id)->findOrFail($id) : new (self::MODELS[$kind]);
+        unset($data['image_upload']);
+        $uploadedPath = null;
+        if ($kind !== 'skill' && $request->hasFile('image_upload')) {
+            File::ensureDirectoryExists(public_path('images/uploads'));
+            $uploadedPath = 'images/uploads/'.$request->file('image_upload')->hashName();
+            $request->file('image_upload')->move(public_path('images/uploads'), basename($uploadedPath));
+            $data['image'] = $uploadedPath;
+        }
+        try {
+            $this->persist($data, $item, $kind, $sectional, $request);
+        } catch (Throwable $exception) {
+            if ($uploadedPath) {
+                File::delete(public_path($uploadedPath));
+            }
+            throw $exception;
+        }
+
+        return redirect('/admin/'.$kind)->with('success', 'Saved. The public portfolio now uses this data.');
+    }
+
+    private function persist(array $data, $item, string $kind, bool $sectional, Request $request): void
+    {
         DB::transaction(function () use ($data, $item, $kind, $sectional, $request) {
             $values = $data;
             foreach (['courses', 'achievements', 'technologies'] as $field) {
@@ -134,6 +161,14 @@ class PortfolioContentController extends Controller
                     $sectionData['endDate'] = null;
                 }
                 $section = $item->exists ? $item->section : new Section(['user_id' => $request->user()->id]);
+                if ($section->exists && ($sectionData['display_period'] ?? null) === $section->display_period) {
+                    foreach (['startDate', 'endDate', 'isActive'] as $field) {
+                        if ((string) ($sectionData[$field] ?? '') !== (string) $section->$field) {
+                            $sectionData['display_period'] = null;
+                            break;
+                        }
+                    }
+                }
                 $section->fill($sectionData)->save();
                 $values = array_diff_key($values, array_flip($fields));
                 $values['section_id'] = $section->id;
@@ -148,9 +183,13 @@ class PortfolioContentController extends Controller
                 $values['link'] = $values['link'] ?? '';
             }
             $item->fill($values)->save();
+            if ($kind === 'skill') {
+                Skill::where('user_id', $request->user()->id)->where('group_name', $item->group_name)->update([
+                    'group_description' => $item->group_description,
+                    'group_order' => $item->group_order,
+                ]);
+            }
         });
-
-        return redirect('/admin/'.$kind)->with('success', 'Saved. The public portfolio now uses this data.');
     }
 
     public function destroy(Request $request, int $id)

@@ -15,7 +15,11 @@
                 <p>{{ $group['description'] }}</p>
                 <ul class="skill-list">
                     @foreach($group['skills'] as $skill)
-                        <li>{{ $skill }}</li>
+                        @if(!empty($group['descriptions'][$skill]))
+                            <li><span>{{ $skill }}</span><small class="skill-description">{{ $group['descriptions'][$skill] }}</small></li>
+                        @else
+                            <li>{{ $skill }}</li>
+                        @endif
                     @endforeach
                 </ul>
             </section>

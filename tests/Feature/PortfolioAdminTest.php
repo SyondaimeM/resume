@@ -10,6 +10,7 @@ use App\Models\User;
 use Database\Seeders\PortfolioSeeder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
+use RuntimeException;
 use Tests\TestCase;
 
 class PortfolioAdminTest extends TestCase
@@ -108,5 +109,99 @@ class PortfolioAdminTest extends TestCase
         $this->get('/')->assertOk()->assertSee('New public summary')->assertSee('PHP Engineer');
         $this->get('/education')->assertOk()->assertSee(basename($owner->resume_path));
         $this->assertSame(['PHP Engineer', 'Backend Engineer'], $owner->roles);
+    }
+
+    public function test_images_can_be_uploaded_and_replaced_without_deleting_existing_files(): void
+    {
+        $this->actingAs($this->owner);
+        $project = Project::first();
+        $data = [
+            'name' => $project->name, 'body' => 'Updated project with uploaded image',
+            'featured' => 1, 'isShown' => 1, 'sort_order' => 0,
+            'image_upload' => UploadedFile::fake()->image('preview.png', 640, 320),
+        ];
+        $this->post('/admin/project/update/'.$project->id, $data)->assertSessionHasNoErrors();
+        $firstPath = $project->fresh()->image;
+        $this->uploads[] = public_path($firstPath);
+        $this->assertStringStartsWith('images/uploads/', $firstPath);
+        $this->assertFileExists(public_path($firstPath));
+        $this->get('/projects')->assertOk()->assertSee($firstPath, false);
+
+        $data['image'] = $firstPath;
+        $data['image_upload'] = UploadedFile::fake()->image('replacement.jpg');
+        $this->post('/admin/project/update/'.$project->id, $data)->assertSessionHasNoErrors();
+        $secondPath = $project->fresh()->image;
+        $this->uploads[] = public_path($secondPath);
+        $this->assertNotSame($firstPath, $secondPath);
+        $this->assertFileExists(public_path($firstPath));
+        $this->assertFileExists(public_path($secondPath));
+
+        $data['image_upload'] = UploadedFile::fake()->create('invalid.svg', 1, 'image/svg+xml');
+        $this->post('/admin/project/update/'.$project->id, $data)->assertSessionHasErrors('image_upload');
+        $this->assertSame($secondPath, $project->fresh()->image);
+    }
+
+    public function test_failed_content_save_cleans_up_only_the_new_upload(): void
+    {
+        $this->actingAs($this->owner);
+        $this->withoutExceptionHandling();
+        $uploadedPath = null;
+        Project::saving(function ($project) use (&$uploadedPath) {
+            $uploadedPath = $project->image;
+            throw new RuntimeException('Synthetic database-save failure');
+        });
+        try {
+            $this->post('/admin/project/store', [
+                'name' => 'Failed upload', 'body' => 'Must not persist',
+                'featured' => 1, 'isShown' => 1, 'sort_order' => 0,
+                'image_upload' => UploadedFile::fake()->image('preview.png'),
+            ]);
+            $this->fail('Expected the save failure to propagate.');
+        } catch (RuntimeException $exception) {
+            $this->assertSame('Synthetic database-save failure', $exception->getMessage());
+        } finally {
+            Project::flushEventListeners();
+        }
+        $this->assertNotNull($uploadedPath);
+        $this->assertFileDoesNotExist(public_path($uploadedPath));
+        $this->assertDatabaseMissing('projects', ['name' => 'Failed upload']);
+    }
+
+    public function test_date_edits_clear_stale_labels_but_preserve_explicit_overrides(): void
+    {
+        $this->actingAs($this->owner);
+        $experience = Experience::first();
+        $data = [
+            'companyName' => $experience->companyName, 'title' => $experience->section->title,
+            'startDate' => $experience->section->startDate, 'endDate' => '2026-09-30',
+            'isActive' => 0, 'isShown' => 1, 'sort_order' => 0,
+            'display_period' => $experience->section->display_period,
+        ];
+        $this->post('/admin/experience/update/'.$experience->id, $data)->assertSessionHasNoErrors();
+        $this->assertNull($experience->fresh()->section->display_period);
+        $this->get('/experience')->assertOk()->assertSee('July 2025 - September 2026');
+
+        $data['endDate'] = '2026-10-01';
+        $data['display_period'] = '2025-2026 (contract)';
+        $this->post('/admin/experience/update/'.$experience->id, $data)->assertSessionHasNoErrors();
+        $this->app->forgetScopedInstances();
+        $this->get('/experience')->assertOk()->assertSee('2025-2026 (contract)');
+        $this->post('/admin/experience/update/'.$experience->id, $data)->assertSessionHasNoErrors();
+        $this->assertSame('2025-2026 (contract)', $experience->fresh()->section->display_period);
+    }
+
+    public function test_skill_description_and_group_edits_are_visible_for_the_entire_group(): void
+    {
+        $this->actingAs($this->owner);
+        $php = Skill::where('name', 'PHP')->firstOrFail();
+        $laravel = Skill::where('name', 'Laravel')->firstOrFail();
+        $this->post('/admin/skill/update/'.$laravel->id, [
+            'name' => 'Laravel', 'description' => 'Backend application framework',
+            'group_name' => $laravel->group_name, 'group_description' => 'Updated backend focus',
+            'group_order' => 2, 'sort_order' => 1, 'isShown' => 1,
+        ])->assertSessionHasNoErrors();
+        $this->assertSame('Updated backend focus', $php->fresh()->group_description);
+        $this->assertSame(2, $php->fresh()->group_order);
+        $this->get('/skills')->assertOk()->assertSee('Backend application framework')->assertSee('Updated backend focus');
     }
 }

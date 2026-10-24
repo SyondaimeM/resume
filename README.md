@@ -62,6 +62,8 @@ Never commit `.env`, credentials, or production database contents.
 - Resume download: `public/Sanish_Maharjan_Resume_2026.pdf`.
 
 Public pages read database records from the same models edited in administration.
+Public controllers explicitly pass portfolio data to their views; rendering does
+not depend on view-composer event registration.
 Cards are server-rendered Blade views; no duplicate JavaScript content arrays
 or config fallbacks resurrect hidden/deleted records. The database must be
 migrated and seeded before publishing.
@@ -75,9 +77,19 @@ migrated and seeded before publishing.
 
 Content editors are restricted to the first account. New/edit/hide/delete actions
 update public pages immediately. Lower order values appear first. Images reference
-existing paths below `public/images/`; image paths and external URLs are validated.
+existing paths below `public/images/`, or upload JPEG/PNG/WebP files up to 5 MB.
+Uploads receive generated names below `public/images/uploads/` (ignored by Git);
+include this directory in deployment backups. Replacing an image retains the
+old file, and failed database writes clean up the newly uploaded file. Image
+paths and external URLs are validated.
 Use plain text with one bullet/course/tool per line. Legacy rich text is converted
 to safe plain text for public display.
+
+Skill descriptions appear on the public cards. Group description/order edits
+apply to every skill with the same group name. Changing a skill's group name
+moves that skill, not the whole group. Date/status edits clear an unchanged
+custom display-period label so old years do not override newly entered dates;
+enter a different label in the same save to explicitly override the computed dates.
 
 The seeder retains the original code content, including all three education
 entries, dates, activities, additional projects, and C/C++ skills, alongside

@@ -34,6 +34,19 @@ class PortfolioPageTest extends TestCase
         }
     }
 
+    public function test_controllers_supply_portfolio_data_without_view_composer_events(): void
+    {
+        $this->app['events']->forget('composing: fields.*');
+        $this->app['events']->forget('composing: partials.portfolio-site-data');
+        $this->app['events']->forget('composing: partials.portfolio-heading');
+
+        foreach (['/', '/home', '/experience', '/projects', '/education', '/skills'] as $path) {
+            $this->get($path)->assertOk()
+                ->assertViewHas('portfolio', fn ($data) => $data['profile']['name'] === 'Sanish Maharjan')
+                ->assertSee('portfolio-site-data', false);
+        }
+    }
+
     public function test_education_and_skills_metadata_identifies_the_portfolio(): void
     {
         foreach (['education', 'skills'] as $page) {

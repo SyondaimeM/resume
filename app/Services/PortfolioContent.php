@@ -46,6 +46,7 @@ class PortfolioContent
             ->groupBy('group_name')->map(fn ($items, $name) => [
                 'title' => $name, 'description' => $items->first()->group_description,
                 'skills' => $items->pluck('name')->all(),
+                'descriptions' => $items->pluck('description', 'name')->all(),
             ])->values()->all();
         $projects = Project::where(function ($query) use ($ownerId) {
             $query->where('user_id', $ownerId)->orWhereNull('user_id');

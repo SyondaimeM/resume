@@ -252,9 +252,8 @@ $(function () {
   bodyElement.append(footer);
   bodyElement.append(upArrow);
   $(".resume-download").attr({ href: portfolioSite.resume, download: portfolioSite.resumeFilename });
-  $(".social-button.github, .socialicon.github").attr("href", portfolioSite.github);
   $(".navbar-brand").text(portfolioSite.name);
-  for (const network of ["linkedin", "instagram"]) {
+  for (const network of ["github", "linkedin", "instagram"]) {
     const links = $(`.social-button.${network}, .socialicon.${network}`);
     if (portfolioSite[network]) {
       links.attr("href", portfolioSite[network]);

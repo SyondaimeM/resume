@@ -198,6 +198,13 @@
   overflow-wrap: anywhere;
 }
 
+.skill-description {
+  display: block;
+  max-width: 32ch;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
 html[light-mode="light"] .portfolio-page {
   color: #27212f;
 }

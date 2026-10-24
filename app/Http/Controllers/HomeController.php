@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Message;
 use App\Services\ContactCaptcha;
+use App\Services\PortfolioContent;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,10 @@ use App\Jobs\SendContactNotification;
 
 class HomeController extends Controller
 {
+    public function __construct(private PortfolioContent $portfolioContent)
+    {
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -21,27 +26,30 @@ class HomeController extends Controller
     {
         $user = User::orderBy('id')->first();
 
-        return view('fields.home', compact('user'));
+        return view('fields.home', [
+            'user' => $user,
+            'portfolio' => $this->portfolioContent->all(),
+        ]);
     }
 
     public function experience()
     {
-        return view('fields.experience');
+        return view('fields.experience', ['portfolio' => $this->portfolioContent->all()]);
     }
 
     public function education()
     {
-        return view('fields.education');
+        return view('fields.education', ['portfolio' => $this->portfolioContent->all()]);
     }
 
     public function projects()
     {
-        return view('fields.projects');
+        return view('fields.projects', ['portfolio' => $this->portfolioContent->all()]);
     }
 
     public function skills()
     {
-        return view('fields.skills');
+        return view('fields.skills', ['portfolio' => $this->portfolioContent->all()]);
     }
 
     public function captcha(Request $request, ContactCaptcha $captcha)
