@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Education;
-use App\Models\Experience;
-use App\Models\Section;
 use App\Models\User;
 use App\Models\Message;
 use App\Services\ContactCaptcha;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use App\Jobs\SendContactNotification;
 
 class HomeController extends Controller
 {
@@ -21,14 +19,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = User::with('activeSkills')->first();
-        $experiences = Experience::with('section')->whereHas('section', function ($e) use ($user) {
-            return $e->where([['user_id',  $user->id],['isShown', 1]]);
-        })->orderByDesc('created_at')->get();
-        $education = Education::with('section')->whereHas('section', function ($e) use ($user) {
-            return $e->where([['user_id',  $user->id],['isShown', 1]]);
-        })->orderByDesc('created_at')->get();
-        return view('fields.home', compact('user', 'experiences', 'education'));
+        $user = User::orderBy('id')->first();
+
+        return view('fields.home', compact('user'));
     }
 
     public function experience()
@@ -76,12 +69,16 @@ class HomeController extends Controller
         }
 
         try {
-            Message::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'description' => $data['message'],
-                'status' => 1,
-            ]);
+            DB::transaction(function () use ($data) {
+                $message = Message::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'description' => $data['message'],
+                    'status' => 1,
+                ]);
+                SendContactNotification::dispatch($message->id)
+                    ->onConnection(config('portfolio_notifications.contact_queue_connection'));
+            });
         } catch (QueryException $exception) {
             report($exception);
 

@@ -322,6 +322,23 @@ color: #ffffff !important;
   color: #fff !important;
 }
 
+html[light-mode="light"] .nav-link.resume-download {
+  background-color: #f3e8ff;
+  border-color: #7635aa;
+  color: #542080 !important;
+}
+
+html[light-mode="light"] .nav-link.resume-download:hover,
+html[light-mode="light"] .nav-link.resume-download:focus {
+  background-color: #e4cff7;
+  color: #381154 !important;
+}
+
+.resume-download:focus-visible {
+  outline: 3px solid #bb86fc;
+  outline-offset: 3px;
+}
+
 .visiontale-wordmark {
   font-family: "Poppins", sans-serif;
   font-size: clamp(1.5rem, 3vw, 2.4rem) !important;

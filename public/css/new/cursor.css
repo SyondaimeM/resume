@@ -1,15 +1,8 @@
-html,
-html *,
-body,
-body * {
-  cursor: none;
-}
-
 .cursor-dot,
 .cursor-dot-outline {
   pointer-events: none;
-  z-index: 2;
-  position: absolute;
+  z-index: 1040;
+  position: fixed;
   top: 50%;
   left: 50%;
   border-radius: 50%;
@@ -30,14 +23,7 @@ body * {
   background-color: rgba(211, 115, 115, 0.959);
 }
 
-@media (max-width: 991.98px), (hover: none), (pointer: coarse) {
-  html,
-  html *,
-  body,
-  body * {
-    cursor: auto;
-  }
-
+@media (max-width: 991.98px), (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
   .cursor-dot,
   .cursor-dot-outline {
     display: none;

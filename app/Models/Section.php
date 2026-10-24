@@ -20,6 +20,8 @@ class Section extends Model
         'endDate',
         'isShown',
         'user_id',
+        'display_period',
+        'sort_order',
     ];
 
     public function user()

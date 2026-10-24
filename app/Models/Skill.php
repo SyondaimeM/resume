@@ -13,7 +13,12 @@ class Skill extends Model
         'name',
         'description',
         'isShown',
-        'user_id'
+        'user_id',
+        'seed_key',
+        'group_name',
+        'group_description',
+        'group_order',
+        'sort_order',
     ];
 
     public function user()

@@ -32,10 +32,17 @@ php artisan migrate
 php artisan serve
 ```
 
-Open the address printed by Artisan. The homepage expects a user record.
-On a new, disposable development database, `php artisan db:seed` creates a sample
-user and skills. Replace sample profile information before publishing. The
-existing seeder does not persist education or experience records.
+Create the owner account before seeding a new database. Public registration is
+disabled; provision the account through your trusted deployment process with a
+secure password. The first account (lowest user ID) owns the public portfolio.
+The seeder deliberately does not create an account with a default password.
+
+```sh
+php artisan db:seed --class=PortfolioSeeder
+```
+
+Open the address printed by Artisan. The configured profile portrait takes
+precedence over the bundled portrait.
 
 Administration routes under `/admin` require Laravel session authentication.
 Public registration is disabled; this application does not require a JWT secret.
@@ -46,15 +53,59 @@ Never commit `.env`, credentials, or production database contents.
 
 - Page templates: `resources/views/fields/`.
 - Shared navigation, theme controls, footer, and contact form: `public/js/new/app.js`.
-- Experience cards: `public/js/new/experience.js`.
-- Project cards: `public/js/new/project.js`.
+- Preserved seed content: `config/portfolio.php`.
+- Idempotent importer: `database/seeders/PortfolioSeeder.php`.
+- Public database adapter: `app/Services/PortfolioContent.php`.
+- Shared inner-page layout: `resources/views/layouts/portfolio.blade.php`.
+- Inner-page styling: `public/css/new/portfolio.css`.
 - Styling: `public/css/new/`.
 - Resume download: `public/Sanish_Maharjan_Resume_2026.pdf`.
 
-The public experience and project cards currently use static JavaScript data,
-not the corresponding admin records. Keep this distinction in mind when
-editing content. Company images retain their aspect ratio; projects without
-screenshots use text banners.
+Public pages read database records from the same models edited in administration.
+Cards are server-rendered Blade views; no duplicate JavaScript content arrays
+or config fallbacks resurrect hidden/deleted records. The database must be
+migrated and seeded before publishing.
+
+- `/admin/experience`: roles, companies, locations, dates, bullets, logos/wordmarks.
+- `/admin/education`: qualifications, dates, courses, activities, and achievements.
+- `/admin/skill`: skills, group names/descriptions, and display/group ordering.
+- `/admin/project`: project descriptions, tools, images, links, and featured status.
+- `/admin/portfolio`: public name, summary, roles, social URLs, and PDF upload.
+- `/admin/profile`: existing profile and portrait editor.
+
+Content editors are restricted to the first account. New/edit/hide/delete actions
+update public pages immediately. Lower order values appear first. Images reference
+existing paths below `public/images/`; image paths and external URLs are validated.
+Use plain text with one bullet/course/tool per line. Legacy rich text is converted
+to safe plain text for public display.
+
+The seeder retains the original code content, including all three education
+entries, dates, activities, additional projects, and C/C++ skills, alongside
+resume updates. Year-only dates use year boundaries internally and retain their
+original year-only display labels. It never deletes records or overwrites
+already-imported edits/visibility. Existing matching entries are retained.
+Re-seeding can restore a seed entry that was deleted; hide it instead to preserve
+an intentional publication decision.
+
+The supplied 2026 PDF is a separate, unchanged document, not an auto-generated
+export. Update the records in admin, then upload a revised PDF in
+`/admin/portfolio`. The shared download button uses the uploaded path on every
+page. Uploads get generated filenames under `public/resumes/` (ignored by Git).
+Old PDFs are retained rather than deleted; include uploads in deployment backups.
+On deployments with cached configuration, rebuild it after changing environment
+settings with `php artisan config:cache`.
+
+Skills are ordered by relevance to the PHP/backend resume, not a measured market
+popularity ranking or proficiency score. Existing education details absent from
+the PDF are preserved, not discarded. An optional display period stays in normal
+flow, so dates never cover qualification headings.
+
+Projects from the resume are separated from additional work preserved from the
+existing portfolio. Company images retain their aspect ratio; projects without
+screenshots use text banners. The shared inner-page layout uses responsive grids
+instead of fixed-height illustration sections and absolutely positioned timelines.
+The native mouse pointer remains visible; the decorative cursor is disabled on
+small screens, touch input, and reduced-motion preferences.
 
 The PayEdge project links to RBC's public product page for product context.
 Personal contributions and NDDS details are based on the supplied resume.
@@ -68,9 +119,11 @@ profile photo still takes precedence.
 up to 255 characters), `message` (up to 10,000 characters), and `captcha`
 (the five-character verification code).
 
-The form stores submissions in the `messages` table; it does not send email.
-Requests use CSRF protection. JSON responses use HTTP 201 on successful storage,
-422 for invalid input, and 503 for a database failure. Database exceptions are
+The form stores submissions and a database-queued email notification in one
+transaction. Requests use CSRF protection. JSON responses use HTTP 201 on
+successful storage/queueing, 422 for invalid input, and 503 if storage or queue
+persistence fails. SMTP delivery is asynchronous and is not claimed by HTTP 201.
+Database exceptions are
 reported through Laravel's exception handler rather than exposed to visitors.
 The browser preserves the message on failure and confirms success only after
 the server acknowledges storage.
@@ -92,22 +145,66 @@ a guarantee against sophisticated OCR-based bots. It is not an accessible
 equivalent to a managed challenge provider; a non-visual alternative remains
 necessary for visitors who cannot read image challenges.
 
+## Email notifications and errors
+
+Set these in `.env` (never in committed code):
+
+```dotenv
+PORTFOLIO_NOTIFICATION_EMAIL=your-notification-address@example.com
+PORTFOLIO_ERROR_EMAILS=true
+PORTFOLIO_MAIL_QUEUE_CONNECTION=database
+```
+
+Configure real `MAIL_*` SMTP settings, including the authenticated sender.
+Laravel 9 supports `MAIL_ENCRYPTION=tls` or `ssl`; `MAIL_SCHEME=smtps` is also
+mapped to SSL. Mail connections time out after ten seconds.
+
+Run a supervised worker in production and restart it after deployments:
+
+```sh
+php artisan queue:work database --sleep=3 --tries=3 --timeout=30
+php artisan queue:failed
+php artisan queue:retry <failed-job-uuid>
+php artisan queue:restart
+```
+
+Each new contact queues an email containing the submitted name/email/message,
+with the visitor as Reply-To. Failures retry three times with backoff and then
+remain in `failed_jobs`; the contact remains stored. Email delivery is at-least-once:
+an ambiguous SMTP acknowledgment can cause a duplicate on retry.
+
+Reported PHP exceptions, error-level application logs, and captured browser
+runtime/unhandled-promise errors trigger system alerts. Normal validation errors,
+404s, and authorization failures are not system-error alerts. Browser reporting
+uses CSRF protection and request throttling; it excludes messages, stack traces,
+URLs/query strings, and form data. Cross-origin script errors are not captured.
+System emails contain only a reference, exception class, source basename/line,
+environment, and timestamp; inspect server logs for details.
+
+Error emails use synchronous SMTP so a database outage can still trigger an alert.
+Identical failures are limited to one alert per five minutes using a local file
+cache. Multiple servers each have their own throttle. Mail/reporting failures
+are logged without recursion and never replace the original exception. Alerts
+cannot operate before Laravel boots or during a total server/SMTP outage; external
+uptime monitoring is still needed. No browser telemetry is sent to third parties.
+
 ## Validation
 
 ```sh
 composer validate
 composer check-platform-reqs
-vendor/bin/phpunit --filter 'ContactMessageTest|PortfolioPageTest' tests/Feature
+vendor/bin/phpunit --filter 'ContactMessageTest|PortfolioPageTest|PortfolioAdminTest|EmailNotificationTest' tests/Feature
 node --check public/js/new/app.js
-node --check public/js/new/experience.js
-node --check public/js/new/project.js
-node --check public/js/new/education.js
+node --check public/js/new/cursor.js
+node --check public/js/new/error-reporting.js
+php -l config/portfolio.php
 git diff --check
 ```
 
 Node.js is needed only for the JavaScript syntax checks above, not for an asset
 build. Contact tests use an in-memory SQLite database and do not modify the
-configured development database.
+configured development database. Mail uses fakes/array transport, and system alerts
+are disabled by default in the test environment.
 
 The full suite can be run with `vendor/bin/phpunit`. Existing legacy tests
 include a database-dependent education test that does not boot Laravel; it

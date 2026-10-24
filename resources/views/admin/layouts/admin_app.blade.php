@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="{{ asset('js/new/error-reporting.js') }}"></script>
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- plugins:css -->
@@ -176,6 +177,8 @@
                         <span class="menu-title">Skill Section</span>
                     </a>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="/admin/project"><i class="mdi mdi-folder menu-icon"></i><span class="menu-title">Projects</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="/admin/portfolio"><i class="mdi mdi-account menu-icon"></i><span class="menu-title">Public profile & resume</span></a></li>
             </ul>
         </nav>
         <!-- partial -->
@@ -199,53 +202,6 @@
     <!-- page-body-wrapper ends -->
 </div>
 <!-- container-scroller -->
-<!-- Countries/cities -->
-<script type="text/javascript">
-    let apiUrl = "https://laravel-world.com/api/countries";
-    let options = '<option value="">Select</option>';
-    //Load the Countries in the dropbox.
-    $(document).ready(function () {
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                var data = JSON.parse(this.responseText).data;
-                data.forEach(createDropbox);
-                document.getElementById("country").innerHTML = options;
-            }
-        };
-        xhttp.open("get", apiUrl);
-        xhttp.send();
-
-        //load the cities on country field change.
-        $('#country').change(function () {
-            if ($(this).val() !== '') {
-                options = [];
-                var countryId = $(this).val();
-                setCities(countryId);
-            } else {
-                $('#city').html('<option value="">Select</option>');
-            }
-        });
-
-        function setCities(id) {
-            const xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState === 4 && this.status === 200) {
-                    var cities = JSON.parse(this.responseText).data[0].states;
-                    cities.forEach(createDropbox);
-                    document.getElementById("city").innerHTML = options;
-                }
-            };
-            xhttp.open("get", apiUrl + "?fields=states&filters[id]=" + id);
-            xhttp.send();
-        }
-
-        function createDropbox(item) {
-            options += '<option value="' + item.id + '">' + item.name + '</option>'
-        }
-    });
-</script>
-<!-- Countries/cities -->
 
 <!-- Plugin js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
@@ -282,4 +238,3 @@
 </body>
 
 </html>
-

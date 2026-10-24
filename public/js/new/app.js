@@ -1,5 +1,6 @@
 
 "use strict";
+const portfolioSite = JSON.parse(document.getElementById("portfolio-site-data").textContent);
 // Header
 
 let header = $(`
@@ -21,7 +22,7 @@ let header = $(`
    <li class="nav-item nav-item-hover"><a class="nav-link" href="/skills">Skills</a></li>
    <li class="nav-item nav-item-hover"><a class="nav-link" href="/projects">Projects</a></li>
    <li class="nav-item nav-item-hover"><a class="nav-link" href="/education">Education</a></li>
-   <li class="nav-item"><a class="nav-link resume-download" href="/Sanish_Maharjan_Resume_2026.pdf" download="Sanish_Maharjan_Resume_2026.pdf"><i class="fas fa-download" aria-hidden="true"></i> Download Resume</a></li>
+   <li class="nav-item"><a class="nav-link resume-download" download><i class="fas fa-download" aria-hidden="true"></i> Download Resume</a></li>
    <li class="nav-item">
    <input type="checkbox" id="dark_toggler" class="dark_toggler" aria-label="Toggle Light Mode" onclick="toggle_light_mode()" checked>
    </li>
@@ -183,7 +184,7 @@ let footer = $(`
       </svg>
     </a>
 
-    <a class="social-button github" href="https://github.com/SyondaimeM" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
+    <a class="social-button github" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
     <!-- SVG code for Github icon -->
     <svg class="github-icon-footer" width="45px" height="45px" viewBox="0 0 300 300">
         <!-- body -->
@@ -250,6 +251,17 @@ $(function () {
   bodyElement.prepend(header);
   bodyElement.append(footer);
   bodyElement.append(upArrow);
+  $(".resume-download").attr({ href: portfolioSite.resume, download: portfolioSite.resumeFilename });
+  $(".social-button.github, .socialicon.github").attr("href", portfolioSite.github);
+  $(".navbar-brand").text(portfolioSite.name);
+  for (const network of ["linkedin", "instagram"]) {
+    const links = $(`.social-button.${network}, .socialicon.${network}`);
+    if (portfolioSite[network]) {
+      links.attr("href", portfolioSite[network]);
+    } else {
+      links.removeAttr("href").attr("aria-disabled", "true");
+    }
+  }
   $("#btnScrollToTop").css("visibility", "hidden");
 
   //toggler hamburger functions
@@ -288,7 +300,9 @@ let loader = document.querySelector(".loader-container");
 window.addEventListener("load", vanish);
 
 function vanish() {
-  loader.classList.add("disappear");
+  if (loader) {
+    loader.classList.add("disappear");
+  }
 }
 $(function () {
   $("a.nav-link").each(function () {

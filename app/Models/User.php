@@ -29,6 +29,8 @@ class User extends Authenticatable
         'instagram',
         'github',
         'photo_path',
+        'roles',
+        'resume_path',
     ];
 
     /**
@@ -48,6 +50,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'roles' => 'array',
     ];
 
     public function skills()

@@ -2,13 +2,14 @@
 <html lang="en" light-mode="dark">
 
 <head>
-    <title>Sanish Maharjan| Home</title>
+    <title>{{ $portfolio['profile']['name'] }} | Home</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="application-name" content="Sanish Maharjan| Home" />
-    <meta name="apple-mobile-web-app-title" content="Sanish Maharjan| Home" />
+    <meta name="application-name" content="{{ $portfolio['profile']['name'] }} | Home" />
+    <meta name="apple-mobile-web-app-title" content="{{ $portfolio['profile']['name'] }} | Home" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="description" content="Sanish Maharjan is a senior backend developer with nearly seven years of experience building scalable PHP, Laravel, and Node.js systems." />
+    <script src="{{ asset('js/new/error-reporting.js') }}"></script>
+    <meta name="description" content="{{ $portfolio['profile']['summary'] }}" />
     <!--For Dark/Light mode Toggle-->
     <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
     <!--Import Google Icon Font-->
@@ -51,16 +52,16 @@
         <div id="particles-js" aria-hidden="true"></div>
         <section class="profile-hero">
         <!-- Home Section -->
-        <div class="text">Hi <span class="wave"><img src="{{asset('images/hand.gif')}}" width="35" alt=""></span>&nbsp;, I'm <span class="header">Sanish Maharjan </span>
+        <div class="text">Hi <span class="wave"><img src="{{asset('images/hand.gif')}}" width="35" alt=""></span>&nbsp;, I'm <span class="header">{{ $portfolio['profile']['name'] }} </span>
             <div class="center">
                 <div>
-                    <img src="{{ asset('images/'.($user->photo_path ?: 'Portrait/pp.jpg')) }}" alt="Sanish Maharjan" class="rounded-circle profile-photo" height="200" width="200">
+                    <img src="{{ asset('images/'.($user?->photo_path ?: 'Portrait/pp.jpg')) }}" alt="{{ $portfolio['profile']['name'] }}" class="rounded-circle profile-photo" height="200" width="200">
                 </div>
                 <br/>
                 <span style="display: inline;">I am into <span class="animated-text"
-                    data-words="Senior Backend Developer, PHP & Laravel Engineer, Node.js Developer, Distributed Systems Engineer"></span>
+                    data-words="{{ implode(', ', $portfolio['profile']['roles']) }}"></span>
                 </span>
-                <p class="profile-summary">Senior Backend Developer with nearly 7 years of experience building high-concurrency applications, real-time data pipelines, and scalable backend systems.</p>
+                <p class="profile-summary">{{ $portfolio['profile']['summary'] }}</p>
                 <div>
                     <div class="social-icons">
 
@@ -163,7 +164,7 @@
                             </svg>
                         </a>
 
-                        <a class="socialicon github" href="https://github.com/SyondaimeM" target="_blank" rel="author noopener noreferrer" aria-label="GitHub profile">
+                        <a class="socialicon github" href="{{ $portfolio['profile']['github'] }}" target="_blank" rel="author noopener noreferrer" aria-label="GitHub profile">
                             <!-- SVG code for Github icon -->
                             <svg class="github-icon" width="45px" height="45px" viewBox="0 0 300 300">
                                 <!-- body -->
@@ -192,6 +193,7 @@
     <!-- Fetching our Google Tag Manager -->
 
     <!--JavaScript at end of body for optimized loading-->
+    @include('partials.portfolio-site-data')
     <script src="{{asset('js/new/app.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

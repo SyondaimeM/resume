@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
-use App\Http\Controllers\admin\EducationController;
-use App\Http\Controllers\admin\ExperienceController;
-use App\Http\Controllers\admin\SkillController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\admin\PortfolioContentController;
+use App\Http\Controllers\admin\PortfolioProfileController;
+use App\Http\Controllers\ClientErrorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +29,8 @@ Route::prefix('')->group(function () {
         ->middleware('throttle:contact-captcha')->name('contact.captcha');
     Route::post('/message', [HomeController::class, 'message'])
         ->middleware('throttle:contact-message')->name('message');
+    Route::post('/client-errors', [ClientErrorController::class, 'store'])
+        ->middleware('throttle:3,1')->name('client-errors');
 });
 
 Auth::routes(['register' => false]);
@@ -40,29 +42,16 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('index', [AdminController::class, 'index']);
         Route::get('profile', [AdminController::class, 'profile']);
         Route::post('profile/update/{id}', [AdminController::class, 'updateProfile']);
+        Route::get('portfolio', [PortfolioProfileController::class, 'edit']);
+        Route::post('portfolio', [PortfolioProfileController::class, 'update']);
 
-        Route::prefix('experience')->group(function () {
-            Route::get('', [ExperienceController::class, 'index']);
-            Route::get('create', [ExperienceController::class, 'create']);
-            Route::post('store', [ExperienceController::class, 'store']);
-            Route::get('edit/{id}', [ExperienceController::class, 'edit']);
-            Route::post('update/{id}', [ExperienceController::class, 'update']);
-            Route::delete('delete/{id}', [ExperienceController::class, 'destroy']);
-        });
-        Route::prefix('education')->group(function () {
-            Route::get('', [EducationController::class, 'index']);
-            Route::get('create', [EducationController::class, 'create']);
-            Route::post('store', [EducationController::class, 'store']);
-            Route::get('edit/{id}', [EducationController::class, 'edit']);
-            Route::post('update/{id}', [EducationController::class, 'update']);
-            Route::delete('delete/{id}', [EducationController::class, 'destroy']);
-        });
-        Route::prefix('skill')->group(function () {
-            Route::get('', [SkillController::class, 'index']);
-            Route::post('store', [SkillController::class, 'store']);
-            Route::post('update/{id}', [SkillController::class, 'update']);
-            Route::delete('delete/{id}', [SkillController::class, 'destroy']);
-        });
+        foreach (['experience', 'education', 'skill', 'project'] as $kind) {
+            Route::get($kind, [PortfolioContentController::class, 'index'])->defaults('kind', $kind);
+            Route::get($kind.'/create', [PortfolioContentController::class, 'create'])->defaults('kind', $kind);
+            Route::post($kind.'/store', [PortfolioContentController::class, 'store'])->defaults('kind', $kind);
+            Route::get($kind.'/edit/{id}', [PortfolioContentController::class, 'edit'])->defaults('kind', $kind);
+            Route::post($kind.'/update/{id}', [PortfolioContentController::class, 'update'])->defaults('kind', $kind);
+            Route::delete($kind.'/delete/{id}', [PortfolioContentController::class, 'destroy'])->defaults('kind', $kind);
+        }
     });
 });
-

@@ -16,8 +16,7 @@ class ContactMessageTest extends TestCase
             'database.connections.sqlite.database' => ':memory:',
         ]);
 
-        $migration = require database_path('migrations/2022_10_24_221735_create_messages_table.php');
-        $migration->up();
+        $this->artisan('migrate', ['--force' => true])->assertExitCode(0);
     }
 
     public function test_valid_message_is_saved_and_acknowledged(): void
@@ -39,6 +38,7 @@ class ContactMessageTest extends TestCase
             'description' => 'I would like to discuss a project.',
             'status' => 1,
         ]);
+        $this->assertDatabaseCount('jobs', 1);
     }
 
     public function test_missing_fields_are_rejected(): void
@@ -76,6 +76,14 @@ class ContactMessageTest extends TestCase
             'status' => 'error',
             'msg' => 'Your message could not be saved. Please try again later.',
         ]);
+    }
+
+    public function test_queue_storage_failure_rolls_back_contact_instead_of_claiming_success(): void
+    {
+        Schema::drop('jobs');
+        $this->withSession($this->captchaSession())->postJson('/message', $this->validMessage())
+            ->assertStatus(503)->assertJson(['status' => 'error']);
+        $this->assertDatabaseCount('messages', 0);
     }
 
     public function test_captcha_is_required_without_a_session_challenge(): void
