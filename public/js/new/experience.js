@@ -20,6 +20,7 @@ const exp = [
   {
     title: "Senior PHP Developer | Full Stack Engineer",
     cardImage: "",
+    brand: "VisionTale",
     place: "VisionTale Studio · GTA, ON",
     time: "July 2024 – June 2025",
     responsibilities: [
@@ -62,11 +63,11 @@ const showCards2 = () => {
 
   let output = "";
   exp.forEach(
-    ({ title, cardImage, place, time, responsibilities }) => {
+    ({ title, cardImage, brand, place, time, responsibilities }) => {
       const companyName = place.split(" · ")[0];
       const companyBrand = cardImage
         ? `<img src="${cardImage}" class="featured-image" alt="${companyName} logo"/>`
-        : `<div class="experience-brand" aria-label="${companyName}">${companyName}</div>`;
+        : `<div class="experience-brand ${brand ? "visiontale-wordmark" : ""}" aria-label="${companyName}">${brand || companyName}</div>`;
 
       output += `
     <div class="col gaap" data-aos="fade-up" data-aos-easing="linear" data-aos-delay="100" data-aos-duration="400"> 

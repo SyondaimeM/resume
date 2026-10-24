@@ -11,15 +11,14 @@ document.body.appendChild(script);
 let header = $(`
 <nav class="navbar navbar-expand-lg fixed-top dark-theme" id="navbar">
 <a class="navbar-brand" href="/">Sanish Maharjan </a>
-<div class="hamburger_wrapper navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<button class="hamburger_wrapper navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
   <div id="js-hamburger" class="hamburger">
     <span class="first"></span>
     <span class="second"></span>
     <span class="third"></span>
   </div>
-
-</div>
+</button>
 
 <div class="collapse navbar-collapse " id="navbarSupportedContent">
   <ul class="navbar-nav ml-auto" id = "navbar-content">
@@ -27,12 +26,12 @@ let header = $(`
    <li class="nav-item nav-item-hover"><a class="nav-link" href="/experience">Experience</a></li>
    <li class="nav-item nav-item-hover"><a class="nav-link" href="/skills">Skills</a></li>
    <li class="nav-item nav-item-hover"><a class="nav-link" href="/projects">Projects</a></li>
-   <li class="nav-item nav-item-hover"><a class="nav-link" href="education">Education</a></li>
+   <li class="nav-item nav-item-hover"><a class="nav-link" href="/education">Education</a></li>
    <li class="nav-item"><a class="nav-link resume-download" href="/Sanish_Maharjan_Resume_2026.pdf" download="Sanish_Maharjan_Resume_2026.pdf"><i class="fas fa-download" aria-hidden="true"></i> Download Resume</a></li>
    <li class="nav-item">
    <input type="checkbox" id="dark_toggler" class="dark_toggler" aria-label="Toggle Light Mode" onclick="toggle_light_mode()" checked>
    </li>
-   <div class="bike">
+   <li class="bike">
    <svg xmlns="http://www.w3.org/2000/svg" viewBox="-80 0 650 400" preserveAspectRatio="xMinYMin meet">
      <rect/>
      <g>
@@ -103,7 +102,7 @@ let header = $(`
        </linearGradient>
      </defs>
    </svg>
- </div>
+ </li>
   </ul>
 </div>
 </nav>`);
@@ -252,16 +251,22 @@ $(function () {
 
   //toggler hamburger functions
   const menuBtn = document.querySelector(".navbar-toggler");
-  let menuOpen = false;
-  menuBtn.addEventListener("click", () => {
-    if (!menuOpen) {
-      menuBtn.classList.add("open");
-      menuOpen = true;
-    } else {
-      menuBtn.classList.remove("open");
-      menuOpen = false;
-    }
-  });
+  const menu = document.getElementById("navbarSupportedContent");
+
+  if (menuBtn && menu) {
+    $(menu).on("shown.bs.collapse", () => {
+      menuBtn.setAttribute("aria-expanded", "true");
+    });
+    $(menu).on("hidden.bs.collapse", () => {
+      menuBtn.setAttribute("aria-expanded", "false");
+    });
+
+    $("#navbar-content .nav-link").on("click", () => {
+      if (window.matchMedia("(max-width: 991.98px)").matches) {
+        $(menu).collapse("hide");
+      }
+    });
+  }
 });
 
 // function for toggling hamburger is-active class

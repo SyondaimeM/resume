@@ -217,6 +217,11 @@ ul ol {
   text-align: center;
 }
 
+.card1 .visiontale-wordmark {
+  color: #f8f6fc;
+  background: linear-gradient(135deg, #17131f, #302145);
+}
+
 @media only screen and (min-width: 1280px) {
   .card1 h3 {
     font-size: 2rem;

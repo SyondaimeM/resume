@@ -324,6 +324,13 @@ color: #ffffff !important;
   color: #fff !important;
 }
 
+.visiontale-wordmark {
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.4rem) !important;
+  font-weight: 300 !important;
+  letter-spacing: -0.06em;
+}
+
 .profile-summary {
   max-width: 680px;
   margin: 1rem auto;
@@ -942,75 +949,75 @@ form {
 }
 
 
-/* to make the navbar open full screen on mobile */
-
-@media (max-width: 768px) {
-  .collapse navbar-collapse {
-      display: flex;
-      justify-content: center;
+@media (max-width: 991.98px) {
+  #navbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.5rem 1rem;
   }
+
+  #navbar .navbar-brand {
+    max-width: calc(100% - 4.5rem);
+    overflow: hidden;
+    font-size: clamp(1.35rem, 5vw, 1.8rem);
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #navbar .hamburger_wrapper {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 0.5rem;
+    border: 0;
+    background: transparent;
+  }
+
+  #navbarSupportedContent {
+    flex-basis: 100%;
+    max-height: calc(100vh - 4.5rem);
+    overflow-y: auto;
+  }
+
+  #navbar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.15rem;
+    height: auto;
+    margin: 0;
+    padding: 0.5rem 0 0.75rem;
+    text-align: left;
+    transform: none;
+  }
+
+  #navbar-content .nav-item {
+    width: 100%;
+    text-align: left;
+  }
+
+  #navbar-content .nav-link {
+    display: block;
+    padding: 0.75rem 1rem !important;
+  }
+
+  #navbar-content .resume-download {
+    width: fit-content;
+    margin: 0.5rem 1rem;
+  }
+
+  #navbar-content .dark_toggler {
+    margin: 0.5rem 1rem;
+  }
+
+  #navbar .bike,
+  #btnScrollToTop {
+    display: none;
+  }
+
   .footer {
-      padding-top: 10px;
-  }
-  #navbar-content {
-      margin-top: -200px;
-      height: 120vh;
-      text-align: center;
-      transform: translateY(25%);
-  }
-  #btnScrollToTop {
-      display: none;
-  }
-}
-
-@media (max-width: 414px) {
-  .collapse navbar-collapse {
-      display: flex;
-      justify-content: center;
-  }
-  #navbar-content {
-      margin-top: -180px;
-      height: 120vh;
-      text-align: center;
-      transform: translateY(25%);
-  }
-  #btnScrollToTop {
-      display: none;
-  }
-}
-
-@media (max-width: 375px) {
-  .collapse navbar-collapse {
-      display: flex;
-      justify-content: center;
-  }
-  #navbar-content {
-      margin-top: -180px;
-      height: 120vh;
-      text-align: center;
-      transform: translateY(25%);
-  }
-  #btnScrollToTop {
-      display: none;
-  }
-}
-
-@media (max-width: 320px) {
-  .collapse navbar-collapse {
-      display: flex;
-      justify-content: center;
-  }
-  #navbar-content {
-      margin-top: -140px;
-      height: 130vh;
-      text-align: center;
-      transform: translateY(25%);
-  }
-  .footer {
-      margin-top: 6rem;
-  }
-  #btnScrollToTop {
-      display: none;
+    padding-top: 10px;
   }
 }
 

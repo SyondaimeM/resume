@@ -6,26 +6,27 @@ const projectcards = document.querySelector(".projectcards");
 // Array of object for projects
 const projects = [
   {
-    title: "RBC QuickPay",
-    cardImage: "images/project/project-card.svg",
+    title: "RBC PayEdge & QuickPay APIs",
+    cardImage: "",
     description:
-      "A real-time money transfer system built on RBC Domain, designed for secure and reliable high-volume transactions. Processed more than $50 million in its first four months.",
-    technologies: "PHP, Node.js, RBC Domain, Kubernetes, Azure, MySQL, REST APIs",
-    Previewlink: "",
+      "Backend work across modules, microservices, queues, jobs, and APIs. RBC publicly describes PayEdge as an accounts-payable platform that integrates with accounting software to automate supplier payments and reconciliation. RBC QuickPay processed more than $50 million in its first four months.",
+    technologies: "PHP, Laravel, Node.js, RBC Domain, Kubernetes, Azure, MySQL, REST APIs",
+    Previewlink: "https://www.rbcroyalbank.com/business/paying-and-receiving/payedge/index.html",
+    Previewlabel: "Official PayEdge details",
     Githublink: "",
   },
   {
-    title: "National Direct Deposit Service",
-    cardImage: "images/project/project-card.svg",
+    title: "National Direct Deposit Service (NDDS)",
+    cardImage: "",
     description:
-      "A high-volume direct-deposit import service that processes over 13,000 records daily, with a focus on throughput, error handling, and data integrity.",
+      "A high-volume direct-deposit record processing system handling more than 13,000 records daily, with an emphasis on throughput, error handling, data integrity, and secure handling of financial data.",
     technologies: "PHP, Redis, RBC Domain, Kubernetes, Azure, MySQL, REST APIs",
     Previewlink: "",
     Githublink: "",
   },
   {
     title: "Kalipso",
-    cardImage: "images/project/project-card.svg",
+    cardImage: "",
     description:
       "An ad-tracking and lead-generation platform that normalizes events from multiple ad networks and provides live campaign reporting and notifications.",
     technologies: "PHP, Laravel, Node.js, Vue.js, Redis, WebSockets, Docker, Kubernetes",
@@ -149,10 +150,13 @@ const showCards = () => {
   }
 
   let output = "";
-  projects.forEach(({ title, cardImage, description, technologies, Previewlink, Githublink }) => {
+  projects.forEach(({ title, cardImage, description, technologies, Previewlink, Previewlabel, Githublink }) => {
+    const projectImage = cardImage
+      ? `<div class="project-image" role="img" aria-label="${title}" style="background-image: url('${cardImage}')"></div>`
+      : `<div class="project-image project-image--brand" role="img" aria-label="${title}"><span>${title.split(/\s+/).map((word) => word[0]).join("").slice(0, 4)}</span></div>`;
     const projectLinks = [
       Previewlink
-        ? `<li><a href="${Previewlink}" class="project-link" target="_blank" rel="noopener noreferrer">Live site <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></li>`
+        ? `<li><a href="${Previewlink}" class="project-link" target="_blank" rel="noopener noreferrer">${Previewlabel || "Live site"} <i class="fas fa-external-link-alt" aria-hidden="true"></i></a></li>`
         : "",
       Githublink
         ? `<li><a href="${Githublink}" class="project-link" target="_blank" rel="noopener noreferrer">Source code <i class="fab fa-github" aria-hidden="true"></i></a></li>`
@@ -161,7 +165,7 @@ const showCards = () => {
 
     output += `
       <article class="portfolio-project" data-aos="zoom-in-up" data-aos-easing="linear" data-aos-delay="100" data-aos-duration="500">
-        <div class="project-image" role="img" aria-label="${title}" style="background-image: url('${cardImage}')"></div>
+        ${projectImage}
         <div class="project-content">
           <h2>${title}</h2>
           <p class="project-description">${description}</p>
