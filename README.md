@@ -15,6 +15,33 @@ The application currently uses Laravel 9. Requiring PHP 8.5 does not by itself
 certify all dependencies for that runtime; dependency maintenance remains
 necessary. Check `composer audit` and the test suite before deployment.
 
+## Production deployment
+
+Back up the database and uploaded files before deployment. Keep server-specific
+changes in a reviewed backup/stash rather than restoring old templates or scripts
+over a newer release. Deploy committed code and assets from the same revision:
+
+```sh
+git pull --ff-only origin main
+composer install --no-dev --prefer-dist --optimize-autoloader
+php artisan migrate --force
+php artisan view:clear
+php artisan config:cache
+php artisan queue:restart
+```
+
+Set `APP_ENV=production`, `APP_DEBUG=false`, and the correct HTTPS `APP_URL` in
+the server's `.env` before caching configuration. Never regenerate an existing
+application key. Restart the web PHP process through the hosting control panel
+if it retains old code, and purge any full-page hosting cache.
+
+Check all public pages, the CAPTCHA image, and the resume download after deploying.
+Error emails report the effective `APP_ENV`; `local` in a live alert means the
+server environment/configuration cache needs attention. Browser script errors
+are reported through `ClientErrorController`, so its PHP source line in an alert
+is the reporting location, not the original JavaScript failure location. Inspect
+the matching Laravel log entry for the sanitized JavaScript filename and line.
+
 ## Local setup
 
 ```sh
@@ -64,6 +91,13 @@ Never commit `.env`, credentials, or production database contents.
 Public pages read database records from the same models edited in administration.
 Public controllers explicitly pass portfolio data to their views; rendering does
 not depend on view-composer event registration.
+Public JavaScript and CSS URLs include a content hash so browsers fetch changed
+files after deployment instead of retaining the previous navigation/contact form.
+Deploy the application and public assets together, then clear compiled views with
+`php artisan view:clear`. Purge any full-page hosting cache after deployment.
+Legacy HTML profile summaries are rendered as escaped plain text without changing
+the stored record. Review imported profile, education, and experience records in
+admin: seeding deliberately preserves existing edits and does not overwrite them.
 Cards are server-rendered Blade views; no duplicate JavaScript content arrays
 or config fallbacks resurrect hidden/deleted records. The database must be
 migrated and seeded before publishing.

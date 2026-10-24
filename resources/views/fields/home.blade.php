@@ -8,22 +8,22 @@
     <meta name="application-name" content="{{ $portfolio['profile']['name'] }} | Home" />
     <meta name="apple-mobile-web-app-title" content="{{ $portfolio['profile']['name'] }} | Home" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <script src="{{ asset('js/new/error-reporting.js') }}"></script>
+    <script src="{{ \App\Support\VersionedAsset::url('js/new/error-reporting.js') }}"></script>
     <meta name="description" content="{{ $portfolio['profile']['summary'] }}" />
     <!--For Dark/Light mode Toggle-->
     <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
     <!--Import Google Icon Font-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/new/preloader.css')}}">
-    <link rel="stylesheet" href="{{asset('css/new/home.css')}}">
-    <link rel="stylesheet" href="{{asset('css/new/style.css')}}">
+    <link rel="stylesheet" href="{{ \App\Support\VersionedAsset::url('css/new/preloader.css') }}">
+    <link rel="stylesheet" href="{{ \App\Support\VersionedAsset::url('css/new/home.css') }}">
+    <link rel="stylesheet" href="{{ \App\Support\VersionedAsset::url('css/new/style.css') }}">
     <!-- Favicon -->
     <link id='favicon' rel="shortcut icon" href="{{asset('images/new/favicon.ico')}}" type="image/x-ico">
     <!-- Font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <script defer src="{{asset('js/new/dynamicTitle.js')}}"></script>
+    <script defer src="{{ \App\Support\VersionedAsset::url('js/new/dynamicTitle.js') }}"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M11CMZ12Q"></script>
     <script>
@@ -52,7 +52,7 @@
         <div id="particles-js" aria-hidden="true"></div>
         <section class="profile-hero">
         <!-- Home Section -->
-        <div class="text">Hi <span class="wave"><img src="{{asset('images/hand.gif')}}" width="35" alt=""></span>&nbsp;, I'm <span class="header">{{ $portfolio['profile']['name'] }} </span>
+        <div class="text">Hi <span class="wave" aria-hidden="true">&#128075;</span>&nbsp;, I'm <span class="header">{{ $portfolio['profile']['name'] }} </span>
             <div class="center">
                 <div>
                     <img src="{{ asset('images/'.($user?->photo_path ?: 'Portrait/pp.jpg')) }}" alt="{{ $portfolio['profile']['name'] }}" class="rounded-circle profile-photo" height="200" width="200">
@@ -131,7 +131,7 @@
                             </svg>
                         </a>
 
-                        <a class="socialicon linkedin" href="https://www.linkedin.com/in/sanis/" target="_blank" rel="author">
+                        <a class="socialicon linkedin" href="{{ $portfolio['profile']['linkedin'] }}" target="_blank" rel="author noopener noreferrer" aria-label="LinkedIn profile">
                             <svg class="linkedin-icon" xmlns="http://www.w3.org/2000/svg" width="35" viewBox="0 0 24 24" fill="#0e76a8" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin">
                                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                                 <rect x="2" y="9" width="4" height="12"></rect>
@@ -153,7 +153,7 @@
                             <i class="fab fa-kaggle"></i>
                         </a>
 
-                        <a class="socialicon instagram" href="https://www.instagram.com/san1sh_p/" target="_blank" rel="author">
+                        <a class="socialicon instagram" href="{{ $portfolio['profile']['instagram'] }}" target="_blank" rel="author noopener noreferrer" aria-label="Instagram profile">
                             <!-- svg code for instagram icon -->
                             <svg class="instagram-icon" x="0px" y="0px" viewBox="0 0 202.5 202.5" style="enable-background:new 0 0 202.5 202.5;">
                                 <circle id="littleCircle" class="st0" cx="101" cy="101.5" r="18.9" />
@@ -194,11 +194,11 @@
 
     <!--JavaScript at end of body for optimized loading-->
     @include('partials.portfolio-site-data')
-    <script src="{{asset('js/new/app.js')}}"></script>
+    <script src="{{ \App\Support\VersionedAsset::url('js/new/app.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js'></script>
-    <script src="{{asset('js/new/particle.js')}}"></script>
+    <script src="{{ \App\Support\VersionedAsset::url('js/new/particle.js') }}"></script>
 
 </body>
 

@@ -17,10 +17,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/new/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/new/cursor.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/new/portfolio.css') }}">
-    <script src="{{ asset('js/new/error-reporting.js') }}"></script>
+    <link rel="stylesheet" href="{{ \App\Support\VersionedAsset::url('css/new/style.css') }}">
+    <link rel="stylesheet" href="{{ \App\Support\VersionedAsset::url('css/new/cursor.css') }}">
+    <link rel="stylesheet" href="{{ \App\Support\VersionedAsset::url('css/new/portfolio.css') }}">
+    <script src="{{ \App\Support\VersionedAsset::url('js/new/error-reporting.js') }}"></script>
     @yield('styles')
 </head>
 <body>
@@ -33,7 +33,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     @include('partials.portfolio-site-data')
-    <script src="{{ asset('js/new/app.js') }}"></script>
-    <script src="{{ asset('js/new/cursor.js') }}"></script>
+    <script src="{{ \App\Support\VersionedAsset::url('js/new/app.js') }}"></script>
+    <script src="{{ \App\Support\VersionedAsset::url('js/new/cursor.js') }}"></script>
 </body>
 </html>

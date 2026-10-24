@@ -61,7 +61,7 @@ class PortfolioContent
         return $this->content = [
             'profile' => [
                 'name' => $owner ? trim($owner->firstName.' '.$owner->lastName) : config('portfolio.profile.name'),
-                'summary' => $owner ? ($owner->summery ?? '') : config('portfolio.profile.summary'),
+                'summary' => implode("\n", $this->lines($owner ? $owner->summery : config('portfolio.profile.summary'))),
                 'roles' => $owner?->roles ?? config('portfolio.profile.roles'),
                 'github' => $owner ? $owner->github : config('portfolio.profile.github'),
                 'linkedin' => $owner?->linkedin,

@@ -385,11 +385,17 @@ function updateColorOfSwiperBullets(lightMode) {
 }
 
 window.addEventListener("storage", function () {
-  if (localStorage.lightMode == "dark") {
-    app.setAttribute("light-mode", "dark");
-  } else {
-    app.setAttribute("light-mode", "light");
+  const dark = localStorage.getItem("lightMode") !== "light";
+  document.documentElement.setAttribute("light-mode", dark ? "dark" : "light");
+  const nav = document.getElementById("navbar");
+  const toggler = document.getElementById("dark_toggler");
+  if (nav) {
+    nav.classList.toggle("dark-theme", dark);
   }
+  if (toggler) {
+    toggler.checked = dark;
+  }
+  updateColorOfSwiperBullets(dark ? "dark" : "light");
 });
 
 // Function to remove scroll bar during preload

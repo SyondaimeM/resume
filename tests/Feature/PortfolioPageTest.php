@@ -142,6 +142,32 @@ class PortfolioPageTest extends TestCase
             ->assertSee('images/Portrait/pp.jpg', false);
     }
 
+    public function test_legacy_profile_html_is_displayed_as_safe_plain_text_without_changing_saved_content(): void
+    {
+        $summary = '<p>Backend &amp; APIs</p><p>PHP<br />Laravel</p>';
+        User::first()->update(['summery' => $summary]);
+
+        $this->get('/')->assertOk()
+            ->assertSee("<p class=\"profile-summary\">Backend &amp; APIs\nPHP\nLaravel</p>", false)
+            ->assertDontSee('&lt;p&gt;', false)
+            ->assertDontSee('images/hand.gif', false);
+        $this->assertSame($summary, User::first()->summery);
+    }
+
+    public function test_public_scripts_and_styles_have_content_based_cache_versions(): void
+    {
+        foreach (['/', '/experience', '/education', '/skills', '/projects'] as $path) {
+            $html = $this->get($path)->assertOk()->getContent();
+            preg_match_all('/(?:src|href)="([^"]+\.(?:js|css)(?:\?[^"]*)?)"/', $html, $matches);
+            $localAssets = array_filter($matches[1], fn ($url) => str_starts_with($url, asset('/')));
+            $this->assertNotEmpty($localAssets);
+            foreach ($localAssets as $url) {
+                $assetPath = ltrim(parse_url($url, PHP_URL_PATH), '/');
+                $this->assertSame(asset($assetPath).'?v='.hash_file('sha256', public_path($assetPath)), $url);
+            }
+        }
+    }
+
     public function test_homepage_does_not_require_admin_skills_or_education_records(): void
     {
         $this->get('/')->assertOk()->assertSee('images/Portrait/pp.jpg', false);

@@ -83,18 +83,21 @@ body{
 #home .profile-summary {
   font-size: 1rem;
   line-height: 1.7;
+  white-space: pre-line;
 }
 
 #home .profile-photo {
   margin: 1rem 0 0;
 }
 
-#home .wave img {
-  width: 35px;
-  height: auto;
-  max-height: 35px;
-  margin: 0;
-  object-fit: contain;
+#home .wave {
+  display: inline-block;
+  font-size: 35px;
+}
+
+.socialicon[href=""],
+.socialicon:not([href]) {
+  display: none;
 }
 
 .section {
