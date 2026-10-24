@@ -5,8 +5,9 @@
     <title>Sanish Maharjan | Education</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="free portfolio template,portfolio template, portfolio website template, open source, open sourcing, contributing to open source" />
-    <meta name="description" content="This project serves free and beautiful portfolio template for everyone. Anyone can showcase their work including moocs, education, projects, experience,etc. to the world." />
+    <meta name="keywords" content="Sanish Maharjan, education, software engineering, backend developer" />
+    <meta name="description" content="Explore Sanish Maharjan's educational background and foundation in software engineering." />
+    <link rel="canonical" href="{{ url('/education') }}" />
 
     <!-- Robot.txt -->
     <meta name="robots" content="index,follow" />
@@ -14,17 +15,16 @@
     <meta name="AdsBot-Google" content="index,follow" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <meta property="og:site_name" content="https://portfolio.smaranjitghose.codes/education.html">
+    <meta property="og:site_name" content="Sanish Maharjan">
     <meta property="og:title" content="Sanish Maharjan | Education">
-    <meta property="og:description" content="This project serves free and beautiful portfolio template for everyone. Anyone can showcase their work including moocs, education, projects, experience,etc. to the world.">
+    <meta property="og:description" content="Explore Sanish Maharjan's educational background and foundation in software engineering.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://portfolio.smaranjitghose.codes/education.html">
+    <meta property="og:url" content="{{ url('/education') }}">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://portfolio.smaranjitghose.codes/education.html">
 
     <meta name="application-name" content="Sanish Maharjan | Education" />
     <meta name="apple-mobile-web-app-title" content="Sanish Maharjan | Education" />
-    <meta name="summary" content="An open source project aimed at providing free and beautiful templates to everyone for building their portfolio websites and showcase their work to the world." />
+    <meta name="summary" content="Sanish Maharjan's education and software engineering background." />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 
     <!--For Dark/Light mode Toggle-->
@@ -34,7 +34,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="{{ asset('css/new/hover-min')}}.css">
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/new/preloader.css')}}">

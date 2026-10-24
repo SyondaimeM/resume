@@ -14,7 +14,6 @@
     <!--Import Google Icon Font-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="{{asset('css/new/preloader.css')}}">
     <link rel="stylesheet" href="{{asset('css/new/home.css')}}">
     <link rel="stylesheet" href="{{asset('css/new/style.css')}}">
@@ -48,17 +47,14 @@
     <!--Dynamic Nav Bar-->
 
     <!--Particles effect-->
-    <div id="home">
-        <section class="center">
-            <div id="particles-js"></div>
-        </section>
-    </div>
-    <center>
+    <main id="home">
+        <div id="particles-js" aria-hidden="true"></div>
+        <section class="profile-hero">
         <!-- Home Section -->
-        <div class="text col-sm-6" style="margin-top: 140px;">Hi <span class="wave"><img src="{{asset('images/Hand.gif')}}" width="35px"></span>&nbsp;, I'm <span class="header">Sanish Maharjan </span>
+        <div class="text">Hi <span class="wave"><img src="{{asset('images/hand.gif')}}" width="35" alt=""></span>&nbsp;, I'm <span class="header">Sanish Maharjan </span>
             <div class="center">
                 <div>
-                    <img src="{{url('/images/'. (($user->photo_path)?? 'blank-profile.png'))}}" alt="" class="rounded-circle" height="200" width="200">
+                    <img src="{{ asset('images/'.($user->photo_path ?: 'Portrait/pp.jpg')) }}" alt="Sanish Maharjan" class="rounded-circle profile-photo" height="200" width="200">
                 </div>
                 <br/>
                 <span style="display: inline;">I am into <span class="animated-text"
@@ -167,7 +163,7 @@
                             </svg>
                         </a>
 
-                        <a class="socialicon github" href="https://github.com/SanishMaharjan1" target="_blank" rel="author">
+                        <a class="socialicon github" href="https://github.com/SyondaimeM" target="_blank" rel="author noopener noreferrer" aria-label="GitHub profile">
                             <!-- SVG code for Github icon -->
                             <svg class="github-icon" width="45px" height="45px" viewBox="0 0 300 300">
                                 <!-- body -->
@@ -184,7 +180,8 @@
                 </div>
             </div>
         </div>
-    </center>
+        </section>
+    </main>
 
     <br><br><br>
     <!-- Dynamic footer section -->

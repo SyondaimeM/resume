@@ -1,11 +1,5 @@
 
 "use strict";
-// Sweet Alert CDN through JS
-let script = document.createElement("script");
-script.type = 'text/javascript';
-script.src="https://unpkg.com/sweetalert/dist/sweetalert.min.js";
-document.body.appendChild(script);
-
 // Header
 
 let header = $(`
@@ -13,11 +7,11 @@ let header = $(`
 <a class="navbar-brand" href="/">Sanish Maharjan </a>
 <button class="hamburger_wrapper navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
-  <div id="js-hamburger" class="hamburger">
+  <span id="js-hamburger" class="hamburger" aria-hidden="true">
     <span class="first"></span>
     <span class="second"></span>
     <span class="third"></span>
-  </div>
+  </span>
 </button>
 
 <div class="collapse navbar-collapse " id="navbarSupportedContent">
@@ -136,14 +130,25 @@ let footer = $(`
              <div class="form-header">
                 <h6 class="display">Get in Touch</h6>
               </div>
-                <form id="idForm" name="form1"action="/message" method="POST" accept-charset="UTF-8" >
-                  <input id="name" type="text" name="name" placeholder="Your Name"/>
-                  <input id="email" type="email" name="email" placeholder="Email Address"/>                  
-                  <textarea id="textArea" name="message" placeholder="Type your Message"></textarea>
-                  <div id="main">
-                    <button id="lnch" type="button" value="Send" >Send</button>
-                    <div id="lnch_btn"><i class="fas fa-space-shuttle"></i></div>
+                <form id="idForm" name="form1" action="/message" method="POST" accept-charset="UTF-8">
+                  <input id="name" type="text" name="name" placeholder="Your Name" aria-label="Your Name" autocomplete="name" maxlength="255" required/>
+                  <input id="email" type="email" name="email" placeholder="Email Address" aria-label="Email Address" autocomplete="email" maxlength="255" required/>
+                  <textarea id="textArea" name="message" placeholder="Type your Message" aria-label="Your Message" maxlength="10000" required></textarea>
+                  <div class="contact-captcha">
+                    <label for="captcha-answer">Verification code</label>
+                    <div class="captcha-challenge">
+                      <img id="captcha-image" src="/contact/captcha" width="220" height="72" alt="Five-character verification challenge" />
+                      <button id="captcha-refresh" type="button">New code</button>
+                    </div>
+                    <p id="captcha-help">Enter the 5 characters above. Letters are not case-sensitive. Codes expire after 5 minutes.</p>
+                    <input id="captcha-answer" name="captcha" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" minlength="5" maxlength="5" aria-describedby="captcha-help" required />
+                    <p id="captcha-status" role="status" aria-live="polite"></p>
                   </div>
+                  <div id="main">
+                    <button id="lnch" type="submit" value="Send">Send</button>
+                    <div id="lnch_btn" aria-hidden="true"><i class="fas fa-space-shuttle"></i></div>
+                  </div>
+                  <p id="contact-status" role="status" aria-live="polite"></p>
                 </form>
               </div>
             </div>
@@ -155,7 +160,7 @@ let footer = $(`
     
 
     <div class="rounded-social-buttons tag">
-    <a class="social-button linkedin" href="https://www.linkedin.com/in/sanis/" target="_blank" >
+    <a class="social-button linkedin" href="https://www.linkedin.com/in/sanis/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">
     <!-- svg code for linkedin icon -->
       <svg class="linkedin-icon-footer" xmlns="http://www.w3.org/2000/svg" width="35" viewBox="0 0 24 24" fill="#0e76a8"
         stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather feather-linkedin">
@@ -167,7 +172,7 @@ let footer = $(`
 
 
 
-    <a class="social-button instagram" href="https://www.instagram.com/san1sh_p/" target="_blank" >
+    <a class="social-button instagram" href="https://www.instagram.com/san1sh_p/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile">
     <!-- svg code for instagram icon -->
       <svg class="instagram-icon-footer" x="0px" y="0px" viewBox="0 0 202.5 202.5"
         style="enable-background:new 0 0 202.5 202.5;">
@@ -178,7 +183,7 @@ let footer = $(`
       </svg>
     </a>
 
-    <a class="social-button github" href="https://github.com/SanishMaharjan1" target="_blank">
+    <a class="social-button github" href="https://github.com/SyondaimeM" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">
     <!-- SVG code for Github icon -->
     <svg class="github-icon-footer" width="45px" height="45px" viewBox="0 0 300 300">
         <!-- body -->
@@ -201,9 +206,7 @@ let footer = $(`
 
 //"Scroll to top" button
 let upArrow = $(`
-  <button id="btnScrollToTop" onclick="scrollToTop()"><i class="fas fa-2x fa-angle-up"></i></button>
-  <link rel="stylesheet" type="text/css" href="./css/new/style.css" />
-  })
+  <button id="btnScrollToTop" type="button" aria-label="Scroll to top" onclick="scrollToTop()"><i class="fas fa-2x fa-angle-up" aria-hidden="true"></i></button>
 `);
 
 $(document).ready(function () {
@@ -256,9 +259,18 @@ $(function () {
   if (menuBtn && menu) {
     $(menu).on("shown.bs.collapse", () => {
       menuBtn.setAttribute("aria-expanded", "true");
+      $("#js-hamburger").addClass("is-active");
     });
     $(menu).on("hidden.bs.collapse", () => {
       menuBtn.setAttribute("aria-expanded", "false");
+      $("#js-hamburger").removeClass("is-active");
+    });
+
+    $(menu).on("keydown", (event) => {
+      if (event.key === "Escape" && window.matchMedia("(max-width: 991.98px)").matches) {
+        $(menu).collapse("hide");
+        menuBtn.focus();
+      }
     });
 
     $("#navbar-content .nav-link").on("click", () => {
@@ -267,14 +279,6 @@ $(function () {
       }
     });
   }
-});
-
-// function for toggling hamburger is-active class
-
-$(function () {
-  $("#js-hamburger").on("click", function () {
-    $(this).toggleClass("is-active");
-  });
 });
 
 // Navbar current page highlight
@@ -290,6 +294,7 @@ $(function () {
   $("a.nav-link").each(function () {
     if ($(this).prop("href") == window.location.href) {
       $(this).addClass("current-link");
+      $(this).attr("aria-current", "page");
     }
   });
 });
@@ -382,66 +387,91 @@ $(window).on("load", function () {
   $(".loader-container").fadeOut(2500);
 });
 
-//send button animation
+$(function contactForm() {
+  const form = document.querySelector("#idForm");
+  const button = $("#lnch");
+  const shuttle = $("#lnch_btn");
+  const status = $("#contact-status");
+  const captchaImage = document.querySelector("#captcha-image");
+  const captchaAnswer = document.querySelector("#captcha-answer");
+  const captchaRefresh = $("#captcha-refresh");
+  let sending = false;
+  let captchaReady = false;
 
+  function refreshCaptcha() {
+    captchaReady = false;
+    captchaAnswer.value = "";
+    $("#captcha-status").text("Loading a new verification code...");
+    captchaImage.src = "/contact/captcha?refresh=" + Date.now();
+  }
 
-$(function submitAnimation() {
-  const name = document.querySelector("#name")
-  const emailAdress = document.querySelector("#email")
-  const text = document.querySelector("#textArea")
-  const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+  $(captchaImage).on("load", function () {
+    captchaReady = true;
+    $("#captcha-status").text("");
+  }).on("error", function () {
+    captchaReady = false;
+    $("#captcha-status").text("The verification image could not load. Choose New code to try again.");
+  });
+  captchaReady = captchaImage.complete && captchaImage.naturalWidth > 0;
+  captchaRefresh.on("click", refreshCaptcha);
 
-  $("#lnch").on("click", function () {
-
-    // Check if the name field is empty or contains a number
-    if (name.value == "" || (/\d/.test(name.value))) {
-      swal("Error !","Please enter a valid name !","error");
+  $(form).on("submit", function (event) {
+    event.preventDefault();
+    if (sending || !form.reportValidity()) {
       return;
     }
-    // Check if the email field is empty or email is not valid ex: test@@email.com
-    else if (emailAdress.value == "" || !(emailPattern.test(emailAdress.value))) {
-      swal("Error !","Please enter a valid email !","error");
+    if (!captchaReady) {
+      status.text("Load a verification code before sending your message.");
       return;
     }
-    // Check if the message field is empty
-    else if (text.value == "") {
-      swal("Error !","Please enter a valid message !","error");
-      return;
-    }
-    else {
 
-      setTimeout(function () {
-        $("#lnch").addClass("launching").text("Sending");
-        $("#lnch_btn").addClass("launching");
-      }, 0);
-      setTimeout(function () {
-        $("#lnch").addClass("launched").text("SENT");
-        $("#lnch_btn").addClass("launched");
-      }, 1500);
-      // Wait for 2.2 seconds so that the send button animation can be fully played before submitting the form
-      setTimeout(() => {
-        //form submission
-        $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
-        var csrf = document.querySelector('meta[name="csrf-token"]').content;
-        var data = $('#idForm').serialize();
-        var actionUrl = '/message';
-        console.log(actionUrl);
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            data: data, // serializes the form's elements.
-            success: function(data)
-            {
-              $('#idForm')[0].reset();
-              window.location.href = "/";
-            }
-        });
-      
-      }, 2200);
-    }
+    sending = true;
+    captchaRefresh.prop("disabled", true);
+    button.prop("disabled", true).removeClass("launched").addClass("launching").text("Sending");
+    shuttle.removeClass("launched").addClass("launching");
+    form.setAttribute("aria-busy", "true");
+    status.text("Sending your message...");
+
+    $.ajax({
+      type: "POST",
+      url: form.action,
+      data: $(form).serialize(),
+      dataType: "json",
+      timeout: 15000,
+      headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        "Accept": "application/json"
+      },
+      success: function (data) {
+        if (!data || data.status !== "success") {
+          status.text("Your message could not be confirmed. Please try again.");
+          return;
+        }
+        form.reset();
+        button.addClass("launched");
+        shuttle.addClass("launched");
+        status.text(data.msg);
+      },
+      error: function (xhr) {
+        const response = xhr.responseJSON;
+        if (xhr.status === 422 && response && response.errors) {
+          status.text(Object.values(response.errors).flat().join(" "));
+        } else if (xhr.status === 419) {
+          status.text("Your session has expired. Refresh this page before sending your message.");
+        } else if (xhr.status === 429) {
+          status.text("Too many attempts. Please wait a minute before trying again.");
+        } else {
+          status.text("Your message could not be sent. Please try again later.");
+        }
+      },
+      complete: function () {
+        sending = false;
+        captchaRefresh.prop("disabled", false);
+        refreshCaptcha();
+        form.removeAttribute("aria-busy");
+        button.prop("disabled", false).removeClass("launching launched").text("Send");
+        shuttle.removeClass("launching launched");
+      }
+    });
   });
 });

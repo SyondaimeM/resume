@@ -8,9 +8,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- SEO -->
     <meta name="keywords"
-        content="free portfolio template,portfolio template, portfolio website template, open source and contribution to open source" />
+        content="Sanish Maharjan, PHP, Laravel, Node.js, backend engineering, technical skills" />
     <meta name="description"
-        content="This project serves as a free and beautiful portfolio template for everyone who needs the perfect portfolio. Anyone can showcase their work including moocs, education, projects, experience,etc. to the world." />
+        content="Explore Sanish Maharjan's technical skills across backend development, APIs, databases, and real-time applications." />
+    <link rel="canonical" href="{{ url('/skills') }}" />
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G6D61F5TL4"></script>
@@ -21,21 +22,18 @@
     <meta name="AdsBot-Google" content="index,follow" />
 
     <!-- Open Graph for Social Media -->
-    <meta property="og:site_name" content="https://portfolio.smaranjitghose.codes/techstack.html" />
+    <meta property="og:site_name" content="Sanish Maharjan" />
     <meta property="og:title" content="Sanish Maharjan | Tech Stack" />
     <meta property="og:description"
-        content="This project serves as a free and beautiful portfolio template for everyone who needs the perfect portfolio. Anyone can showcase their work including moocs, education, projects, experience,etc. to the world." />
+        content="Explore Sanish Maharjan's technical skills across backend development, APIs, databases, and real-time applications." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://portfolio.smaranjitghose.codes/techstack.html" />
+    <meta property="og:url" content="{{ url('/skills') }}" />
     <meta name="twitter:card" content="summary" />
-
-    <!-- Twitter Posts -->
-    <meta name="twitter:site" content="https://portfolio.smaranjitghose.codes/techstack.html" />
 
     <meta name="application-name" content="Sanish Maharjan | Tech Stack" />
     <meta name="apple-mobile-web-app-title" content="Sanish Maharjan | Tech Stack" />
     <meta name="summary"
-        content="An open source project aimed at providing free and beautiful templates to everyone for building their portfolio websites and showcase their work to the world." />
+        content="Sanish Maharjan's backend and full-stack development skills." />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
         integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="

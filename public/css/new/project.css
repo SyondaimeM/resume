@@ -104,6 +104,7 @@ body[light-mode="dark"] .light-mode-button span:nth-child(2) {
 @media (max-width: 766px) {
   .dropdown {
     position: absolute;
+    left: 0;
     padding-right: 3.5rem;
   }
   .godown {
@@ -368,7 +369,7 @@ input[type="text"] {
 
 .project-box .page-content {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;

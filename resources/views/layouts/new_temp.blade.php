@@ -2,7 +2,7 @@
 <html lang="en" light-mode="dark">
 
 <head>
-    <title>Sanish Resume</title>
+    <title>@yield('title', 'Sanish Maharjan | Portfolio')</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--For Dark/Light mode Toggle-->
@@ -10,7 +10,6 @@
     <!--Import Google Icon Font-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300&display=swap" rel="stylesheet">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="{{asset('css/new/preloader.css')}}">
     <link rel="stylesheet" href="{{asset('css/new/home.css')}}">
     <link rel="stylesheet" href="{{asset('css/new/style.css')}}">

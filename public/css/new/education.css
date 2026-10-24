@@ -46,23 +46,23 @@ html {
 
  @media (max-width: 767px) {
   .dropdown1 {
-    position: absolute;
+    position: relative;
     text-align: center;
     padding-right: 1.2rem;
     z-index: 3;
     padding-left: 3.5%;
   }
   .dropdown2 {
-    position: absolute;
+    position: relative;
     text-align: center;
-    padding-top: 10rem;
+    padding-top: 2rem;
     padding-left: 3.5%;
     z-index: 3;
   }
   .godown {
-    position: absolute;
+    position: relative;
     z-index: 1;
-    padding-top: 8rem;
+    padding-top: 2rem;
   }
 }
 

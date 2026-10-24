@@ -25,7 +25,10 @@ Route::prefix('')->group(function () {
     Route::get('/projects', [HomeController::class, 'projects'])->name('projects');
     Route::get('/education', [HomeController::class, 'education'])->name('education');
     Route::get('/skills', [HomeController::class, 'skills'])->name('skills');
-    Route::post('/message', [HomeController::class, 'message'])->name('message');
+    Route::get('/contact/captcha', [HomeController::class, 'captcha'])
+        ->middleware('throttle:contact-captcha')->name('contact.captcha');
+    Route::post('/message', [HomeController::class, 'message'])
+        ->middleware('throttle:contact-message')->name('message');
 });
 
 Auth::routes(['register' => false]);
@@ -62,5 +65,4 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 });
-
 

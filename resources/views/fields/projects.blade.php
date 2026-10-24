@@ -19,7 +19,6 @@
     <!--Import animation.css-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <link rel="stylesheet" href="{{asset('css/new/preloader.css')}}">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
     <link rel="stylesheet" type="text/css" href="{{asset('css/new/project.css')}}" />
@@ -48,8 +47,6 @@
             <div class="electron-omega"></div>
 		</div>
    </div>
-add 
-
     <div class="container pt-5" style="width: 100%; min-height: 80%">
         <section style="height: 70vh">
             <div class="px-3 pt-5">

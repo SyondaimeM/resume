@@ -7,9 +7,10 @@ use App\Models\Experience;
 use App\Models\Section;
 use App\Models\User;
 use App\Models\Message;
+use App\Services\ContactCaptcha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class HomeController extends Controller
 {
@@ -50,26 +51,49 @@ class HomeController extends Controller
         return view('fields.skills');
     }
 
-    public function message(Request $request)
-    {   
-        // dd($data);
-        try {
-            // Safely perform set of DB related queries if fail rollback all.
-            DB::transaction(function () use ($request){
-                $data = $request->all();
-                $message = new Message();
-                $message->name = $data['name'];
-                $message->email = $data['email'];
-                $message->description = $data['message'];
-                $message->status = 1;
-                $message->save();
-            });
-        } catch (\Exception $exception){
-            // Back to form with errors
-            return response()->json(['status'=>'401','msg'=>$exception->getMessage()]);
-        }
-        return response()->json(['status'=>'500','msg'=>'success']);
-        // return redirect('/')-> with('success', 'Sent');
+    public function captcha(Request $request, ContactCaptcha $captcha)
+    {
+        return response($captcha->image($request), 200, [
+            'Content-Type' => 'image/png',
+            'Cache-Control' => 'no-store, private, max-age=0',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
+    }
 
+    public function message(Request $request, ContactCaptcha $captcha)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'message' => ['required', 'string', 'max:10000'],
+            'captcha' => ['required', 'string', 'size:5'],
+        ]);
+
+        if (!$captcha->verify($request, $data['captcha'])) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'captcha' => 'The verification code is incorrect or expired. Enter the new code below.',
+            ]);
+        }
+
+        try {
+            Message::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'description' => $data['message'],
+                'status' => 1,
+            ]);
+        } catch (QueryException $exception) {
+            report($exception);
+
+            return response()->json([
+                'status' => 'error',
+                'msg' => 'Your message could not be saved. Please try again later.',
+            ], 503);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'msg' => 'Thank you! Your message has been received.',
+        ], 201);
     }
 }

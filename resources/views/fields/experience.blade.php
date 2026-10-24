@@ -1,6 +1,9 @@
 @extends('layouts.new_temp')
+@section('title', 'Sanish Maharjan | Experience')
 @section ('style')
 
+    <meta name="description" content="Sanish Maharjan's backend and full-stack engineering experience across advertising, digital storytelling, and financial services." />
+    <link rel="canonical" href="{{ url('/experience') }}" />
     <link rel="stylesheet" href="{{asset('css/new/experience.css')}}" />
     <!-- <link rel="stylesheet" type="text/css" href="assets/css/style.css" /> -->
     <link rel="stylesheet" href="{{asset('css/new/cursor.css')}}">
